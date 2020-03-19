@@ -1,10 +1,20 @@
 import React from 'react'
 import { Typography } from 'antd'
 import LandingLayout from '@layouts/LandingLayout'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { toggleDarkMode } from '../store/app'
 
-export default () => (
+const IndexPage = ({ isDarkMode, dispatch }) => (
   <LandingLayout>
     <div className='flex flex-col items-center'>
+      <button
+        type='button'
+        style={isDarkMode ? { background: 'black', color: 'white' } : null}
+        onClick={() => dispatch(toggleDarkMode(!isDarkMode))}
+      >
+        Dark mode {isDarkMode ? 'on' : 'off'}
+      </button>
       <Typography.Title className='text-primary-color'>
         Fast in every way that matters
       </Typography.Title>
@@ -16,3 +26,15 @@ export default () => (
     </div>
   </LandingLayout>
 )
+
+IndexPage.propTypes = {
+  isDarkMode: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+}
+
+export default connect(
+  state => ({
+    isDarkMode: state.app.isDarkMode,
+  }),
+  null,
+)(IndexPage)
