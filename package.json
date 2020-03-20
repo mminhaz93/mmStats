@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": {
-    "name": "Gherciu Gheorghe",
-    "email": "gherciu553@gmail.com",
-    "url": "https://gherciu.github.io/portfolio/"
+    "name": "Mohammed Minhaz",
+    "email": "mminhaz93@gmail.com",
+    "url": "https://minhaz.netlify.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Gherciu/gatsby-all-in"
+    "url": "https://github.com/mminhaz93/gatsby-all"
   },
   "bugs": {
-    "url": "https://github.com/Gherciu/gatsby-all-in/issues"
+    "url": "https://github.com/mminhaz93/gatsby-all/issues"
   },
   "scripts": {
     "build": "gatsby build",

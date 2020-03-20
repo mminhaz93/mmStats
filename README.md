@@ -6,12 +6,12 @@
 </div>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b654c94e-08a6-4b79-b443-7837581b1d8d/deploy-status)](https://app.netlify.com/sites/gatsby-all-in/deploys)
-[![GitHub](https://img.shields.io/github/license/Gherciu/gatsby-all-in)](https://github.com/Gherciu/gatsby-all-in/blob/master/LICENSE.md)
-[![Gatsby-All-In](https://img.shields.io/badge/Generated%20from-gatsby--all--in-green)](https://github.com/Gherciu/gatsby-all-in)
+[![GitHub](https://img.shields.io/github/license/Gherciu/gatsby-all-in)](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md)
+[![Gatsby-All-In](https://img.shields.io/badge/Generated%20from-gatsby--all--in-green)](https://github.com/mminhaz93/gatsby-all)
 
 ### Getting started
 
-- Create a new Gatsby site using the gatsby-all-in starter: `gatsby new blog https://github.com/Gherciu/gatsby-all-in`
+- Create a new Gatsby site using the gatsby-all-in starter: `gatsby new blog https://github.com/mminhaz93/gatsby-all`
 - Edit configuration variables in `.env.development` file
 - Start dev server: `npm run start`
 
@@ -49,11 +49,11 @@
 
 ## Author
 
-**[@Gherciu/gatsby-all-in](https://github.com/Gherciu/gatsby-all-in)** © [GHERCIU](https://github.com/Gherciu), Released under the [MIT](https://github.com/Gherciu/gatsby-all-in/blob/master/LICENSE.md) License.<br>
-Authored and maintained by GHERCIU with help from contributors ([list](https://github.com/Gherciu/gatsby-all-in/contributors)).
+**[@Gherciu/gatsby-all-in](https://github.com/mminhaz93/gatsby-all)** © [GHERCIU](https://github.com/Gherciu), Released under the [MIT](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md) License.<br>
+Authored and maintained by GHERCIU with help from contributors ([list](https://github.com/mminhaz93/gatsby-all/contributors)).
 
-#### If you like this repository star⭐ and watch👀 on [GitHub](https://github.com/Gherciu/gatsby-all-in)
+#### If you like this repository star⭐ and watch👀 on [GitHub](https://github.com/mminhaz93/gatsby-all)
 
 ## 💫 Deploy
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Gherciu/gatsby-all-in)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/mminhaz93/gatsby-all)
