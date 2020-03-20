@@ -45,7 +45,9 @@
     "antd": "^3.20.1",
     "bourbon": "^6.0.0",
     "classnames": "^2.2.6",
+    "connected-react-router": "^6.8.0",
     "gatsby": "^2.13.18",
+    "history": "^4.10.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -57,6 +59,7 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "tailwindcss": "^1.0.4",
     "yup": "^0.27.0"
   },

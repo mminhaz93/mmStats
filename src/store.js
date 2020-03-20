@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction'
-import reducer from '@store/reducer'
+import reducer from './reducers/index'
 
 const initializeStore = (initialState = {}) => {
   const logger = createLogger({
@@ -20,7 +20,7 @@ const initializeStore = (initialState = {}) => {
   )
   // Make reducers hot reloadable
   if (module.hot)
-    module.hot.accept('./reducer', () => {
+    module.hot.accept('./reducers/index', () => {
       store.replaceReducer(reducer)
     })
   return store

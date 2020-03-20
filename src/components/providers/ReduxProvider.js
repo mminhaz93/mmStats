@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
-import initializeStore from '@store'
+import initializeStore from '../../store'
 
 const ReduxProvider = ({ children }) => (
   <Provider store={initializeStore()}>{children}</Provider>
