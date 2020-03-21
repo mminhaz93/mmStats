@@ -1,17 +1,17 @@
 <div align="center">
   <img width="200" height="200"
-    src="https://raw.githubusercontent.com/Gherciu/gatsby-all-in/master/static/logo.png">
+    src="https://raw.githubusercontent.com/Gherciu/moStats/master/static/logo.png">
   <h1>MoStats</h1>
-  <p> 🗃⚛️A GatsbyJs starter that includes the most popular js libraries, already pre-configured and ready for use. <a href="https://gatsby-all-in.netlify.com/" alt="gatsby-all-in">DEMO</a>.</p>
+  <p> 🗃⚛️A GatsbyJs starter that includes the most popular js libraries, already pre-configured and ready for use. <a href="https://moStats.netlify.com/" alt="moStats">DEMO</a>.</p>
 </div>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b654c94e-08a6-4b79-b443-7837581b1d8d/deploy-status)](https://app.netlify.com/sites/gatsby-all-in/deploys)
-[![GitHub](https://img.shields.io/github/license/Gherciu/gatsby-all-in)](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md)
-[![Gatsby-All-In](https://img.shields.io/badge/Generated%20from-gatsby--all--in-green)](https://github.com/mminhaz93/gatsby-all)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b654c94e-08a6-4b79-b443-7837581b1d8d/deploy-status)](https://app.netlify.com/sites/moStats/deploys)
+[![GitHub](https://img.shields.io/github/license/Gherciu/moStats)](https://github.com/mminhaz93/moStats/blob/master/LICENSE.md)
+[![moStats](https://img.shields.io/badge/Generated%20from-gatsby--all--in-green)](https://github.com/mminhaz93/moStats)
 
 ### Getting started
 
-- Create a new Gatsby site using the gatsby-all-in starter: `gatsby new blog https://github.com/mminhaz93/gatsby-all`
+- Create a new Gatsby site using the moStats starter: `gatsby new blog https://github.com/mminhaz93/moStats`
 - Edit configuration variables in `.env.development` file
 - Start dev server: `npm run start`
 
@@ -45,11 +45,11 @@
 
 ## Author
 
-**[@mminhaz93/gatsby-all](https://github.com/mminhaz93/gatsby-all)** © [MMINHAZ](https://github.com/mminhaz93), Released under the [MIT](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md) License.<br>
-Authored and maintained by GHERCIU with help from contributors ([list](https://github.com/mminhaz93/gatsby-all/contributors)).
+**[@mminhaz93/moStats](https://github.com/mminhaz93/moStats)** © [MMINHAZ](https://github.com/mminhaz93), Released under the [MIT](https://github.com/mminhaz93/moStats/blob/master/LICENSE.md) License.<br>
+Authored and maintained by GHERCIU with help from contributors ([list](https://github.com/mminhaz93/moStats/contributors)).
 
-#### If you like this repository star⭐ and watch👀 on [GitHub](https://github.com/mminhaz93/gatsby-all)
+#### If you like this repository star⭐ and watch👀 on [GitHub](https://github.com/mminhaz93/moStats)
 
 ## 💫 Deploy
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/mminhaz93/gatsby-all)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/mminhaz93/moStats)

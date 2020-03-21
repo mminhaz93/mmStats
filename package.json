@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mminhaz93/gatsby-all"
+    "url": "https://github.com/mminhaz93/moStats"
   },
   "bugs": {
-    "url": "https://github.com/mminhaz93/gatsby-all/issues"
+    "url": "https://github.com/mminhaz93/moStats/issues"
   },
   "scripts": {
     "build": "gatsby build",
