@@ -1,7 +1,7 @@
 <div align="center">
   <img width="200" height="200"
     src="https://raw.githubusercontent.com/Gherciu/gatsby-all-in/master/static/logo.png">
-  <h1>gatsby-all-in</h1>
+  <h1>MoStats</h1>
   <p> 🗃⚛️A GatsbyJs starter that includes the most popular js libraries, already pre-configured and ready for use. <a href="https://gatsby-all-in.netlify.com/" alt="gatsby-all-in">DEMO</a>.</p>
 </div>
 
