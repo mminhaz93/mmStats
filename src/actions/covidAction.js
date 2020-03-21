@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch'
 import { headers, worldTotalUrl } from '../util/config'
 
 import { COVID_WORLD_TOTAL_STAT } from './types'
