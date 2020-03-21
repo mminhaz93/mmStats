@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware } from 'redux'
-import { createLogger } from 'redux-logger'
+import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction'
+import { createLogger } from 'redux-logger'
+import thunk from 'redux-thunk'
 import reducer from './reducers/index'
 
 const initializeStore = (initialState = {}) => {
@@ -10,15 +11,12 @@ const initializeStore = (initialState = {}) => {
     diff: true,
   })
 
-  // const composeEnhancers = composeWithDevTools({
-  //   // options like actionSanitizer, stateSanitizer
-  // })
   const store = createStore(
     reducer,
     initialState,
-    composeWithDevTools(applyMiddleware(logger)),
+    composeWithDevTools(applyMiddleware(thunk, logger)),
   )
-  // Make reducers hot reloadable
+
   if (module.hot)
     module.hot.accept('./reducers/index', () => {
       store.replaceReducer(reducer)

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Typography } from 'antd'
 import LandingLayout from '@layouts/LandingLayout'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { connect } from 'react-redux'
-import { toggleDarkMode } from '../action/darkModeAction'
+import WorldDetails from '../components/layouts/Convid/WorldDetails'
+import { toggleDarkMode } from '../actions/darkModeAction'
 
 // eslint-disable-next-line no-shadow
 const IndexPage = ({ isDarkMode, toggleDarkMode }) => (
@@ -16,15 +16,9 @@ const IndexPage = ({ isDarkMode, toggleDarkMode }) => (
       >
         Dark mode {isDarkMode ? 'on' : 'off'}
       </button>
-      <Typography.Title className='text-primary-color'>
-        Fast in every way that matters
-      </Typography.Title>
-      <Typography.Title level={4} className='text-gray-600'>
-        Gatsby is a free and open source framework based on React that helps
-        developers build blazing fast websites and apps
-      </Typography.Title>
-      <img src='/cover.png' alt='logo' className='mt-10' />
     </div>
+    {/* <Posts /> */}
+    <WorldDetails />
   </LandingLayout>
 )
 
@@ -35,6 +29,7 @@ IndexPage.propTypes = {
 
 const mapStateToProps = state => ({
   isDarkMode: state.mode.isDarkMode,
+  items: state.covid.items,
 })
 
 export default connect(

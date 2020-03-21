@@ -43,13 +43,9 @@
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-#### Or you can sponsor via [Open Collective](https://opencollective.com/gherciu-gheorghe/)
-
-[![Open Collective](https://opencollective.com/gherciu-gheorghe/tiers/sponsor.svg?avatarHeight=60)](https://opencollective.com/gherciu-gheorghe/)
-
 ## Author
 
-**[@Gherciu/gatsby-all-in](https://github.com/mminhaz93/gatsby-all)** © [GHERCIU](https://github.com/Gherciu), Released under the [MIT](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md) License.<br>
+**[@mminhaz93/gatsby-all](https://github.com/mminhaz93/gatsby-all)** © [MMINHAZ](https://github.com/mminhaz93), Released under the [MIT](https://github.com/mminhaz93/gatsby-all/blob/master/LICENSE.md) License.<br>
 Authored and maintained by GHERCIU with help from contributors ([list](https://github.com/mminhaz93/gatsby-all/contributors)).
 
 #### If you like this repository star⭐ and watch👀 on [GitHub](https://github.com/mminhaz93/gatsby-all)
