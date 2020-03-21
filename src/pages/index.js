@@ -29,7 +29,6 @@ IndexPage.propTypes = {
 
 const mapStateToProps = state => ({
   isDarkMode: state.mode.isDarkMode,
-  items: state.covid.items,
 })
 
 export default connect(

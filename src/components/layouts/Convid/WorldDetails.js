@@ -4,9 +4,11 @@
 import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
-import { Typography } from 'antd'
+import { Typography, Statistic, Row, Col, Alert, Card } from 'antd'
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { fetchWorldTotalStat } from '../../../actions/covidAction'
+import { convertDate } from '../../../util/helpers'
 
 class WorldDetails extends Component {
   componentWillMount() {
@@ -21,21 +23,57 @@ class WorldDetails extends Component {
       total_deaths,
       total_recovered,
       new_cases,
-      new_deaths,
       statistic_taken_at,
     } = this.props.covid
+
+    const worldDateMessage = `Data as of ${convertDate(
+      statistic_taken_at,
+    )} (GMT)`
 
     return (
       <div>
         <Typography.Title className='text-primary-color'>
           World Details
         </Typography.Title>
-        <div>Total cases: {total_cases}</div>
-        <div>Total deaths: {total_deaths}</div>
-        <div>Total recovered: {total_recovered}</div>
-        <div>New Cases: {new_cases}</div>
-        <div>New Cases: {new_deaths}</div>
-        <p>Date as of {statistic_taken_at}</p>
+        <Alert message={worldDateMessage} type='info' showIcon />
+
+        <Row>
+          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+            <Card>
+              <Statistic
+                title='New Cases'
+                value={new_cases}
+                valueStyle={{ color: '#cf1322' }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+            <Card>
+              <Statistic title='Total Cases' value={total_cases} />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+            <Card>
+              <Statistic
+                title='Total Recovered'
+                value={total_recovered}
+                valueStyle={{ color: '#3f8600' }}
+                prefix={<ArrowUpOutlined />}
+              />
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+            <Card>
+              <Statistic
+                title='Total Death'
+                value={total_deaths}
+                valueStyle={{ color: '#cf1322' }}
+                prefix={<ArrowDownOutlined />}
+              />
+            </Card>
+          </Col>
+        </Row>
       </div>
     )
   }
@@ -43,7 +81,7 @@ class WorldDetails extends Component {
 
 WorldDetails.propTypes = {
   fetchWorldTotalStat: PropTypes.func.isRequired,
-  covid: PropTypes.array.isRequired,
+  covid: PropTypes.any.isRequired,
 }
 
 const mapStateToProps = state => ({
