@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary-color': '#663399', // primary color for all components
+        'primary-color': '#009387', // primary color for all components
         'link-color': '#1890ff', // link color
         'success-color': '#52c41a', // success state color
         'warning-color': '#faad14', // warning state color
@@ -16,7 +16,7 @@ module.exports = {
       },
     },
     fill: {
-      'primary-color': '#663399', // primary color for all components
+      'primary-color': '#009387', // primary color for all components
       'link-color': '#1890ff', // link color
       'success-color': '#52c41a', // success state color
       'warning-color': '#faad14', // warning state color
