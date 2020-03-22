@@ -16,7 +16,7 @@ import {
   fetchCountriesStat,
   fetchCountryHistory,
 } from '../../../../actions/covidAction'
-import { convertDate } from '../../../../util/helpers'
+import { fetchedNow } from '../../../../util/helpers'
 
 class CountriesDetails extends Component {
   state = {
@@ -181,7 +181,7 @@ class CountriesDetails extends Component {
 
     const historyDataTransformed = _.map(history, item => {
       const newItem = _.clone(item)
-      newItem.record_date = convertDate(newItem.record_date, 'LL')
+      newItem.record_date = fetchedNow(newItem.record_date)
       return newItem
     })
 
@@ -274,10 +274,16 @@ class CountriesDetails extends Component {
 
     const drawerColumns = [
       {
-        title: 'Date Record',
+        title: 'Record Date',
         dataIndex: 'record_date',
         key: 'cases',
-        align: 'center',
+        width: 90,
+        defaultSortOrder: 'ascend',
+        sorter: (a, b) => {
+          const dateA = new Date(a.age).getTime()
+          const dateB = new Date(b.age).getTime()
+          return dateA > dateB ? 1 : -1
+        },
       },
       {
         title: 'Total Cases',
@@ -321,6 +327,7 @@ class CountriesDetails extends Component {
         key: 'active_cases',
       },
     ]
+   
 
     return (
       <div>

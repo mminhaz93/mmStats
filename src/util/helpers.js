@@ -1,11 +1,17 @@
 /* eslint-disable no-param-reassign */
 import moment from 'moment'
 
+export const fetchedNow = (date) => {
+  return moment
+    .utc(date)
+    .local()
+    .fromNow()
+}
+
 export const convertDate = (date, format) => {
   if (format === undefined) {
     format = 'LLLL'
   }
-
   return moment(date).format(format)
 }
 
