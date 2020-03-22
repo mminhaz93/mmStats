@@ -1,8 +1,8 @@
 <div align="center">
   <img width="200" height="200"
     src="https://raw.githubusercontent.com/Gherciu/moStats/master/static/logo.png">
-  <h1>MoStats</h1>
-  <p> 🗃⚛️A GatsbyJs starter that includes the most popular js libraries, already pre-configured and ready for use. <a href="https://moStats.netlify.com/" alt="moStats">DEMO</a>.</p>
+  <h1>MmStats</h1>
+  <p> 🗃⚛️A GatsbyJs starter that includes the most popular js libraries, already pre-configured and ready for use. <a href="https://mmstats.netlify.com/" alt="moStats">DEMO</a>.</p>
 </div>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b654c94e-08a6-4b79-b443-7837581b1d8d/deploy-status)](https://app.netlify.com/sites/moStats/deploys)

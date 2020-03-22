@@ -4,8 +4,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import WorldDetails from '../components/layouts/Convid/WorldDetails'
 import { toggleDarkMode } from '../actions/darkModeAction'
-import CountryDetails from '../components/layouts/Convid/CountryDetails'
-import CountiresDetails from '../components/layouts/Convid/CountiresDetails'
+// import CountryDetails from '../components/layouts/Convid/CountryDetails'
+import CountiresDetails from '../components/layouts/Convid/countries/CountiresDetails'
 
 // eslint-disable-next-line no-shadow
 const IndexPage = ({ isDarkMode, toggleDarkMode }) => (

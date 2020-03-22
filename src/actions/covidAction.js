@@ -22,20 +22,6 @@ export const fetchWorldTotalStat = () => dispatch => {
     )
 }
 
-export const fetchCountriesStat = () => dispatch => {
-  fetch(countriesUrl, {
-    method: 'GET',
-    headers,
-  })
-    .then(res => res.json())
-    .then(data =>
-      dispatch({
-        type: COVID_COUNTRIES,
-        payload: data,
-      }),
-    )
-}
-
 export const fetchCountryStat = () => dispatch => {
   fetch(`${countryUrl}canada`, {
     method: 'GET',
@@ -48,4 +34,20 @@ export const fetchCountryStat = () => dispatch => {
         payload: data,
       }),
     )
+}
+
+export const fetchCountriesStat = () => dispatch => {
+  fetch(countriesUrl, {
+    method: 'GET',
+    headers,
+  })
+    .then(res => res.json())
+    .then(data => {
+      // eslint-disable-next-line camelcase
+      const { countries_stat } = data
+      dispatch({
+        type: COVID_COUNTRIES,
+        payload: countries_stat,
+      })
+    })
 }
