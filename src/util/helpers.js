@@ -1,7 +1,12 @@
+/* eslint-disable no-param-reassign */
 import moment from 'moment'
 
-export const convertDate = date => {
-  return moment(date).format('LLLL')
+export const convertDate = (date, format) => {
+  if (format === undefined) {
+    format = 'LLLL'
+  }
+
+  return moment(date).format(format)
 }
 
 export const convertHoursToMins = totalMinutes => {

@@ -11,3 +11,6 @@ export const countriesUrl =
 
 export const countryUrl =
   'https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country='
+
+export const countryHistoryUrl =
+  'https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php?country='

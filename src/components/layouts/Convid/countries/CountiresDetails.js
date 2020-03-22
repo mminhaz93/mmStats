@@ -1,15 +1,22 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Table, Button } from 'antd'
+import { Input, Table, Button, Tooltip, Drawer } from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
-import { SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined, EllipsisOutlined } from '@ant-design/icons'
 import _ from 'lodash'
-import { fetchCountriesStat } from '../../../../actions/covidAction'
+import {
+  fetchCountriesStat,
+  fetchCountryHistory,
+} from '../../../../actions/covidAction'
+import { convertDate } from '../../../../util/helpers'
 
 class CountriesDetails extends Component {
   state = {
@@ -17,12 +24,29 @@ class CountriesDetails extends Component {
     searchedColumn: '',
     filteredInfo: null,
     sortedInfo: null,
+    visible: false,
   }
 
   componentWillMount() {
     // eslint-disable-next-line no-shadow
     const { fetchCountriesStat } = this.props
     fetchCountriesStat()
+  }
+
+  // Drawer
+  handleDrawer = country => {
+    // console.log("Country", country)
+    const { fetchCountryHistory } = this.props
+    fetchCountryHistory(country)
+    this.setState({
+      visible: true,
+    })
+  }
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    })
   }
 
   // Sorting
@@ -135,14 +159,14 @@ class CountriesDetails extends Component {
   }
 
   render() {
-    const { countries } = this.props
+    const { countries, history } = this.props
 
     const countriesDataTransformed = _.map(countries, item => {
       const replaceComma = str => {
         return !_.isNil(str) ? str.replace(/[, ]+/g, '').trim() : str
       }
 
-      let newItem = _.clone(item)
+      const newItem = _.clone(item)
       newItem.cases = replaceComma(newItem.cases) * 1
       newItem.deaths = replaceComma(newItem.deaths) * 1
       newItem.total_recovered = replaceComma(newItem.total_recovered) * 1
@@ -155,6 +179,12 @@ class CountriesDetails extends Component {
       return newItem
     })
 
+    const historyDataTransformed = _.map(history, item => {
+      const newItem = _.clone(item)
+      newItem.record_date = convertDate(newItem.record_date, 'LL')
+      return newItem
+    })
+
     let { sortedInfo } = this.state
     sortedInfo = sortedInfo || {}
 
@@ -164,19 +194,17 @@ class CountriesDetails extends Component {
         dataIndex: 'country_name',
         key: 'country_name',
         ...this.getColumnSearchProps('country_name'),
-        sorter: (a, b) => ('' + a.country_name).localeCompare(b.country_name),
+        sorter: (a, b) => `${a.country_name}`.localeCompare(b.country_name),
         sortOrder: sortedInfo.columnKey === 'country_name' && sortedInfo.order,
-        ellipsis: true,
-        width: 200,
+        width: 150,
       },
       {
-        title: 'Cases',
+        title: 'Total Cases',
         dataIndex: 'cases',
         key: 'cases',
         align: 'center',
         sorter: (a, b) => a.cases - b.cases,
         sortOrder: sortedInfo.columnKey === 'cases' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Recovered',
@@ -186,7 +214,6 @@ class CountriesDetails extends Component {
         sorter: (a, b) => a.total_recovered - b.total_recovered,
         sortOrder:
           sortedInfo.columnKey === 'total_recovered' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Deaths',
@@ -195,7 +222,6 @@ class CountriesDetails extends Component {
         align: 'center',
         sorter: (a, b) => a.deaths - b.deaths,
         sortOrder: sortedInfo.columnKey === 'deaths' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'New Cases',
@@ -204,7 +230,6 @@ class CountriesDetails extends Component {
         align: 'center',
         sorter: (a, b) => a.new_cases - b.new_cases,
         sortOrder: sortedInfo.columnKey === 'new_cases' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'New Deaths',
@@ -213,7 +238,6 @@ class CountriesDetails extends Component {
         align: 'center',
         sorter: (a, b) => a.new_deaths - b.new_deaths,
         sortOrder: sortedInfo.columnKey === 'new_deaths' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Serious Critical',
@@ -223,7 +247,6 @@ class CountriesDetails extends Component {
         sorter: (a, b) => a.serious_critical - b.serious_critical,
         sortOrder:
           sortedInfo.columnKey === 'serious_critical' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Active Cases',
@@ -232,7 +255,70 @@ class CountriesDetails extends Component {
         align: 'center',
         sorter: (a, b) => a.active_cases - b.active_cases,
         sortOrder: sortedInfo.columnKey === 'active_cases' && sortedInfo.order,
-        ellipsis: true,
+      },
+      {
+        title: '',
+        key: 'operation',
+        fixed: 'right',
+        width: 50,
+        align: 'right',
+        render: record => (
+          <Tooltip placement='top' title='View History'>
+            <a onClick={() => this.handleDrawer(record.country_name)}>
+              <EllipsisOutlined />
+            </a>
+          </Tooltip>
+        ),
+      },
+    ]
+
+    const drawerColumns = [
+      {
+        title: 'Date Record',
+        dataIndex: 'record_date',
+        key: 'cases',
+        align: 'center',
+      },
+      {
+        title: 'Total Cases',
+        dataIndex: 'total_cases',
+        key: 'cases',
+        align: 'center',
+      },
+      {
+        title: 'Recovered',
+        dataIndex: 'total_recovered',
+        key: 'total_recovered',
+        align: 'center',
+      },
+      {
+        title: 'Deaths',
+        dataIndex: 'total_deaths',
+        key: 'deaths',
+        align: 'center',
+      },
+      {
+        title: 'New Cases',
+        dataIndex: 'new_cases',
+        key: 'new_cases',
+        align: 'center',
+      },
+      {
+        title: 'New Deaths',
+        dataIndex: 'new_deaths',
+        key: 'new_deaths',
+        align: 'center',
+      },
+      {
+        title: 'Serious Critical',
+        dataIndex: 'serious_critical',
+        key: 'serious_critical',
+        align: 'center',
+      },
+      {
+        title: 'Active Cases',
+        dataIndex: 'active_cases',
+        key: 'active_cases',
       },
     ]
 
@@ -247,7 +333,22 @@ class CountriesDetails extends Component {
           columns={columns}
           dataSource={countriesDataTransformed || []}
           onChange={this.handleChange}
+          // scroll={{ x: 1500, y: 300 }}
         />
+        <Drawer
+          title=' History'
+          placement='right'
+          s
+          onClose={this.onClose}
+          visible={this.state.visible}
+          width={650}
+        >
+          <Table
+            dataSource={historyDataTransformed}
+            columns={drawerColumns}
+            size='small'
+          />
+        </Drawer>
       </div>
     )
   }
@@ -255,14 +356,17 @@ class CountriesDetails extends Component {
 
 CountriesDetails.propTypes = {
   fetchCountriesStat: PropTypes.func.isRequired,
+  fetchCountryHistory: PropTypes.func.isRequired,
   countries: PropTypes.array.isRequired,
+  history: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = state => ({
   countries: state.covid.countries,
+  history: state.covid.countryHistory,
 })
 
 export default connect(
   mapStateToProps,
-  { fetchCountriesStat },
+  { fetchCountriesStat, fetchCountryHistory },
 )(CountriesDetails)
