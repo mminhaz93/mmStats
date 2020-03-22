@@ -33,7 +33,7 @@ class WorldDetails extends Component {
     return (
       <div>
         <Typography.Title className='text-primary-color'>
-          World Details
+          Coronavirus (COVID-19)
         </Typography.Title>
         <Alert message={worldDateMessage} type='info' showIcon />
 

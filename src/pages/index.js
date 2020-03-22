@@ -10,7 +10,7 @@ import CountiresDetails from '../components/layouts/Convid/countries/CountiresDe
 // eslint-disable-next-line no-shadow
 const IndexPage = ({ isDarkMode, toggleDarkMode }) => (
   <LandingLayout>
-    <div className='flex flex-col items-center'>
+    {/* <div className='flex flex-col items-center'>
       <button
         type='button'
         style={isDarkMode ? { background: 'black', color: 'white' } : null}
@@ -18,7 +18,7 @@ const IndexPage = ({ isDarkMode, toggleDarkMode }) => (
       >
         Dark mode {isDarkMode ? 'on' : 'off'}
       </button>
-    </div>
+    </div> */}
     {/* <Posts /> */}
     <WorldDetails />
     {/* <CountryDetails /> */}
