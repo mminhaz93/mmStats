@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -10,7 +11,7 @@ import { Input, Table, Button, Tooltip, Drawer } from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
-import { SearchOutlined, EllipsisOutlined } from '@ant-design/icons'
+import { SearchOutlined, MoreOutlined } from '@ant-design/icons'
 import _ from 'lodash'
 import {
   fetchCountriesStat,
@@ -22,7 +23,6 @@ class CountriesDetails extends Component {
   state = {
     searchText: '',
     searchedColumn: '',
-    filteredInfo: null,
     sortedInfo: null,
     visible: false,
   }
@@ -35,7 +35,6 @@ class CountriesDetails extends Component {
 
   // Drawer
   handleDrawer = country => {
-    // console.log("Country", country)
     const { fetchCountryHistory } = this.props
     fetchCountryHistory(country)
     this.setState({
@@ -53,28 +52,7 @@ class CountriesDetails extends Component {
   handleChange = (pagination, filters, sorter) => {
     // console.log('Various parameters', pagination, filters, sorter)
     this.setState({
-      filteredInfo: filters,
       sortedInfo: sorter,
-    })
-  }
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null })
-  }
-
-  clearAll = () => {
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
-    })
-  }
-
-  setCountrySort = () => {
-    this.setState({
-      sortedInfo: {
-        order: 'ascend',
-        columnKey: 'country_name',
-      },
     })
   }
 
@@ -265,7 +243,7 @@ class CountriesDetails extends Component {
         render: record => (
           <Tooltip placement='top' title='View History'>
             <a onClick={() => this.handleDrawer(record.country_name)}>
-              <EllipsisOutlined />
+              <MoreOutlined />
             </a>
           </Tooltip>
         ),
@@ -327,7 +305,6 @@ class CountriesDetails extends Component {
         key: 'active_cases',
       },
     ]
-   
 
     return (
       <div>
@@ -341,6 +318,7 @@ class CountriesDetails extends Component {
           dataSource={countriesDataTransformed || []}
           onChange={this.handleChange}
           // scroll={{ x: 1500, y: 300 }}
+          size='small'
         />
         <Drawer
           title=' History'

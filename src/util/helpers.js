@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import moment from 'moment'
 
-export const fetchedNow = (date) => {
+export const fetchedNow = date => {
   return moment
     .utc(date)
     .local()

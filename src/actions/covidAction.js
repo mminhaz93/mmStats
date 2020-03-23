@@ -8,7 +8,12 @@ import {
   countryHistoryUrl,
 } from '../util/config'
 
-import { COVID_WORLD_TOTAL_STAT, COVID_COUNTRY, COVID_COUNTRIES, COVID_COUNTRY_HISTORY } from './types'
+import {
+  COVID_WORLD_TOTAL_STAT,
+  COVID_COUNTRY,
+  COVID_COUNTRIES,
+  COVID_COUNTRY_HISTORY,
+} from './types'
 
 export const fetchWorldTotalStat = () => dispatch => {
   fetch(worldTotalUrl, {
