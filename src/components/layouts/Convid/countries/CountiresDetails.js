@@ -11,13 +11,14 @@ import { Input, Table, Button, Tooltip, Drawer } from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
-import { SearchOutlined, MoreOutlined } from '@ant-design/icons'
+import { SearchOutlined, EllipsisOutlined } from '@ant-design/icons'
 import _ from 'lodash'
 import {
   fetchCountriesStat,
   fetchCountryHistory,
 } from '../../../../actions/covidAction'
 import { fetchedNow } from '../../../../util/helpers'
+import { drawerColumns } from './TableProperties'
 
 class CountriesDetails extends Component {
   state = {
@@ -36,6 +37,7 @@ class CountriesDetails extends Component {
   // Drawer
   handleDrawer = country => {
     const { fetchCountryHistory } = this.props
+
     fetchCountryHistory(country)
     this.setState({
       visible: true,
@@ -98,7 +100,7 @@ class CountriesDetails extends Component {
       </div>
     ),
     filterIcon: filtered => (
-      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+      <SearchOutlined style={{ color: filtered ? '#009387' : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -113,7 +115,11 @@ class CountriesDetails extends Component {
     render: text =>
       this.state.searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightStyle={{
+            backgroundColor: '#009387',
+            padding: 0,
+            color: '#fff',
+          }}
           searchWords={[this.state.searchText]}
           autoEscape
           textToHighlight={text.toString()}
@@ -242,88 +248,28 @@ class CountriesDetails extends Component {
         align: 'right',
         render: record => (
           <Tooltip placement='top' title='View History'>
-            <a onClick={() => this.handleDrawer(record.country_name)}>
-              <MoreOutlined />
-            </a>
+            <Button
+              className='convid-country-history'
+              size='small'
+              onClick={() => this.handleDrawer(record.country_name)}
+            >
+              <EllipsisOutlined />
+            </Button>
           </Tooltip>
         ),
       },
     ]
 
-    const drawerColumns = [
-      {
-        title: 'Record Date',
-        dataIndex: 'record_date',
-        key: 'cases',
-        width: 90,
-        defaultSortOrder: 'ascend',
-        sorter: (a, b) => {
-          const dateA = new Date(a.age).getTime()
-          const dateB = new Date(b.age).getTime()
-          return dateA > dateB ? 1 : -1
-        },
-      },
-      {
-        title: 'Total Cases',
-        dataIndex: 'total_cases',
-        key: 'cases',
-        align: 'center',
-      },
-      {
-        title: 'Recovered',
-        dataIndex: 'total_recovered',
-        key: 'total_recovered',
-        align: 'center',
-      },
-      {
-        title: 'Deaths',
-        dataIndex: 'total_deaths',
-        key: 'deaths',
-        align: 'center',
-      },
-      {
-        title: 'New Cases',
-        dataIndex: 'new_cases',
-        key: 'new_cases',
-        align: 'center',
-      },
-      {
-        title: 'New Deaths',
-        dataIndex: 'new_deaths',
-        key: 'new_deaths',
-        align: 'center',
-      },
-      {
-        title: 'Serious Critical',
-        dataIndex: 'serious_critical',
-        key: 'serious_critical',
-        align: 'center',
-      },
-      {
-        title: 'Active Cases',
-        dataIndex: 'active_cases',
-        key: 'active_cases',
-      },
-    ]
-
     return (
-      <div>
-        {/* <div className='table-operations'>
-          <Button onClick={this.setCountrySort}>Sort countries</Button>
-          <Button onClick={this.clearFilters}>Clear filters</Button>
-          <Button onClick={this.clearAll}>Clear sorters</Button>
-        </div> */}
+      <div className='covid-world-table'>
         <Table
           columns={columns}
           dataSource={countriesDataTransformed || []}
           onChange={this.handleChange}
-          // scroll={{ x: 1500, y: 300 }}
-          size='small'
         />
         <Drawer
           title=' History'
           placement='right'
-          s
           onClose={this.onClose}
           visible={this.state.visible}
           width={650}
@@ -332,6 +278,7 @@ class CountriesDetails extends Component {
             dataSource={historyDataTransformed}
             columns={drawerColumns}
             size='small'
+            // loading={this.state.historyLoading}
           />
         </Drawer>
       </div>

@@ -3,14 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import WorldDetails from '../components/layouts/Convid/WorldDetails'
 import { toggleDarkMode } from '../actions/darkModeAction'
-import CountiresDetails from '../components/layouts/Convid/countries/CountiresDetails'
+import CountiresDetails from '../components/layouts/Convid/Countries/CountiresDetails'
 
 // eslint-disable-next-line no-shadow
 const IndexPage = () => (
-  <LandingLayout>
-    <WorldDetails />
-    <CountiresDetails />
-  </LandingLayout>
+  <div>
+    <LandingLayout />
+  </div>
 )
 
 const mapStateToProps = state => ({

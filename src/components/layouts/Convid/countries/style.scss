@@ -5,3 +5,13 @@
 .table-operations > button {
   margin-right: 8px;
 }
+
+.convid-country-history {
+  width: 32px;
+  & span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
