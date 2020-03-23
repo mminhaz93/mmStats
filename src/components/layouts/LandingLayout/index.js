@@ -6,7 +6,7 @@ import Sider from './Sider'
 import Convid from '../Convid/index'
 
 const { Content } = Layout
-export default function LandingLayout() {
+const LandingLayout = () => {
   const components = {
     1: <Convid />,
     2: <div>Option 2</div>,
@@ -37,3 +37,4 @@ export default function LandingLayout() {
     </div>
   )
 }
+export default LandingLayout

@@ -66,12 +66,12 @@ export const fetchCountryHistory = country => dispatch => {
 // }
 
 // Handle HTTP errors since fetch won't.
-function handleErrors(response) {
+/* function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText)
   }
   return response
-}
+} */
 
 export const fetchHistoryBegin = () => ({
   type: FETCH_COUNTRY_HISTORY_BEGIN,
