@@ -3,7 +3,7 @@ import { Layout } from 'antd'
 import Sider from './Sider'
 
 // Component
-import Convid from '../Convid/Index'
+import Convid from '../Convid/index'
 
 const { Content } = Layout
 export default function LandingLayout() {
