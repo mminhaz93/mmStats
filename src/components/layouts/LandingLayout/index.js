@@ -3,12 +3,12 @@ import { Layout } from 'antd'
 import Sider from './Sider'
 
 // Component
-import Convid from '../Convid/index'
+import Covid from '../Covid/index'
 
 const { Content } = Layout
 const LandingLayout = () => {
   const components = {
-    1: <Convid />,
+    1: <Covid />,
     2: <div>Option 2</div>,
     3: <div>Option 3</div>,
     4: <div>Option 4</div>,

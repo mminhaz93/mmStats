@@ -249,7 +249,7 @@ class CountriesDetails extends Component {
         render: record => (
           <Tooltip placement='top' title='View History'>
             <Button
-              className='convid-country-history'
+              className='covid-country-history'
               size='small'
               onClick={() => this.handleDrawer(record.country_name)}
             >

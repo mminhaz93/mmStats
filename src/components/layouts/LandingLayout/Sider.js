@@ -46,7 +46,7 @@ class Sider extends Component {
         <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
           <Menu.Item key='1' onClick={handleClick}>
             <MdHealing className='anticon' />
-            <span>Convid-19</span>
+            <span>Covid-19</span>
           </Menu.Item>
           <Menu.Item key='2' onClick={handleClick}>
             <Icon type='video-camera' />
