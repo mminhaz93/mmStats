@@ -7,7 +7,7 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Table, Button, Tooltip, Drawer } from 'antd'
+import { Input, Table, Button, Tooltip, Result } from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
@@ -17,8 +17,9 @@ import {
   fetchCountriesStat,
   fetchCountryHistory,
 } from '../../../../actions/covidAction'
-import { fetchedNow } from '../../../../util/helpers'
+import { fetchedNowDateFormat } from '../../../../util/helpers'
 import { drawerColumns } from './TableProperties'
+import DrawerWrapper from '../../../common/DrawerWrapper'
 
 class CountriesDetails extends Component {
   state = {
@@ -53,8 +54,8 @@ class CountriesDetails extends Component {
   }
 
   // Sorting
+  // pagination, filters is needed for sort for some reason
   handleChange = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter)
     this.setState({
       sortedInfo: sorter,
     })
@@ -169,7 +170,7 @@ class CountriesDetails extends Component {
 
     const historyDataTransformed = _.map(history, item => {
       const newItem = _.clone(item)
-      newItem.record_date = fetchedNow(newItem.record_date)
+      newItem.record_date = fetchedNowDateFormat(newItem.record_date)
       return newItem
     })
 
@@ -192,7 +193,7 @@ class CountriesDetails extends Component {
         sortOrder: sortedInfo.columnKey === 'cases' && sortedInfo.order,
       },
       {
-        title: 'Recovered',
+        title: 'Total Recovered',
         dataIndex: 'total_recovered',
         key: 'total_recovered',
         align: 'center',
@@ -209,6 +210,23 @@ class CountriesDetails extends Component {
         sortOrder: sortedInfo.columnKey === 'deaths' && sortedInfo.order,
       },
       {
+        title: 'Active Cases',
+        dataIndex: 'active_cases',
+        key: 'active_cases',
+        align: 'center',
+        sorter: (a, b) => a.active_cases - b.active_cases,
+        sortOrder: sortedInfo.columnKey === 'active_cases' && sortedInfo.order,
+      },
+      {
+        title: 'Serious Critical',
+        dataIndex: 'serious_critical',
+        key: 'serious_critical',
+        align: 'center',
+        sorter: (a, b) => a.serious_critical - b.serious_critical,
+        sortOrder:
+          sortedInfo.columnKey === 'serious_critical' && sortedInfo.order,
+      },
+      {
         title: 'New Cases',
         dataIndex: 'new_cases',
         key: 'new_cases',
@@ -223,23 +241,6 @@ class CountriesDetails extends Component {
         align: 'center',
         sorter: (a, b) => a.new_deaths - b.new_deaths,
         sortOrder: sortedInfo.columnKey === 'new_deaths' && sortedInfo.order,
-      },
-      {
-        title: 'Serious Critical',
-        dataIndex: 'serious_critical',
-        key: 'serious_critical',
-        align: 'center',
-        sorter: (a, b) => a.serious_critical - b.serious_critical,
-        sortOrder:
-          sortedInfo.columnKey === 'serious_critical' && sortedInfo.order,
-      },
-      {
-        title: 'Active Cases',
-        dataIndex: 'active_cases',
-        key: 'active_cases',
-        align: 'center',
-        sorter: (a, b) => a.active_cases - b.active_cases,
-        sortOrder: sortedInfo.columnKey === 'active_cases' && sortedInfo.order,
       },
       {
         title: '',
@@ -265,15 +266,13 @@ class CountriesDetails extends Component {
       <div className='covid-world-table'>
         <Table
           columns={columns}
-          dataSource={countriesDataTransformed || []}
+          dataSource={countriesDataTransformed}
           onChange={this.handleChange}
         />
-        <Drawer
-          title={`${countrySelectedForHistory}'s Corona virus history`}
-          placement='right'
+        <DrawerWrapper
+          title={`${countrySelectedForHistory}'s coronavirus history`}
           onClose={this.onClose}
           visible={this.state.visible}
-          width={650}
         >
           {!historyError && (
             <Table
@@ -284,9 +283,12 @@ class CountriesDetails extends Component {
             />
           )}
           {historyError && (
-            <div>Something went wrong. Please try again later </div>
+            <Result
+              status='warning'
+              title='Was not able to fetch data. Please try again later.'
+            />
           )}
-        </Drawer>
+        </DrawerWrapper>
       </div>
     )
   }
