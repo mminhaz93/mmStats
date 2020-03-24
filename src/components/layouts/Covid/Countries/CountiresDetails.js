@@ -25,6 +25,7 @@ class CountriesDetails extends Component {
     searchText: '',
     searchedColumn: '',
     sortedInfo: null,
+    countrySelectedForHistory: '',
     visible: false,
   }
 
@@ -40,6 +41,7 @@ class CountriesDetails extends Component {
 
     fetchCountryHistory(country)
     this.setState({
+      countrySelectedForHistory: country,
       visible: true,
     })
   }
@@ -143,7 +145,9 @@ class CountriesDetails extends Component {
   }
 
   render() {
-    const { countries, history } = this.props
+    const { countries, history, historyError, loadingHistory } = this.props
+    let { sortedInfo } = this.state
+    sortedInfo = sortedInfo || {}
 
     const countriesDataTransformed = _.map(countries, item => {
       const replaceComma = str => {
@@ -168,9 +172,6 @@ class CountriesDetails extends Component {
       newItem.record_date = fetchedNow(newItem.record_date)
       return newItem
     })
-
-    let { sortedInfo } = this.state
-    sortedInfo = sortedInfo || {}
 
     const columns = [
       {
@@ -259,7 +260,7 @@ class CountriesDetails extends Component {
         ),
       },
     ]
-
+    const { countrySelectedForHistory } = this.state
     return (
       <div className='covid-world-table'>
         <Table
@@ -268,18 +269,23 @@ class CountriesDetails extends Component {
           onChange={this.handleChange}
         />
         <Drawer
-          title=' History'
+          title={`${countrySelectedForHistory}'s Corona virus history`}
           placement='right'
           onClose={this.onClose}
           visible={this.state.visible}
           width={650}
         >
-          <Table
-            dataSource={historyDataTransformed}
-            columns={drawerColumns}
-            size='small'
-            // loading={this.state.historyLoading}
-          />
+          {!historyError && (
+            <Table
+              dataSource={historyDataTransformed}
+              columns={drawerColumns}
+              size='small'
+              loading={loadingHistory}
+            />
+          )}
+          {historyError && (
+            <div>Something went wrong. Please try again later </div>
+          )}
         </Drawer>
       </div>
     )
@@ -291,11 +297,15 @@ CountriesDetails.propTypes = {
   fetchCountryHistory: PropTypes.func.isRequired,
   countries: PropTypes.array.isRequired,
   history: PropTypes.array.isRequired,
+  loadingHistory: PropTypes.bool.isRequired,
+  historyError: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
   countries: state.covid.countries,
   history: state.covid.countryHistory,
+  loadingHistory: state.covid.loadingHistory,
+  historyError: state.covid.historyError,
 })
 
 export default connect(
