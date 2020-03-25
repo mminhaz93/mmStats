@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Icon, Typography } from 'antd'
+import { Layout, Menu, Typography } from 'antd'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { ReactComponent as LogoIcon } from '@static/logo.svg'
@@ -48,14 +48,14 @@ class Sider extends Component {
             <MdHealing className='anticon' />
             <span>Covid-19</span>
           </Menu.Item>
-          <Menu.Item key='2' onClick={handleClick}>
+          {/*        <Menu.Item key='2' onClick={handleClick}>
             <Icon type='video-camera' />
             <span>nav 2</span>
           </Menu.Item>
           <Menu.Item key='3' onClick={handleClick}>
             <Icon type='upload' />
             <span>nav 3</span>
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Layout.Sider>
     )

@@ -146,7 +146,14 @@ class CountriesDetails extends Component {
   }
 
   render() {
-    const { countries, history, historyError, loadingHistory } = this.props
+    const {
+      countries,
+      countriesError,
+      loadingCountries,
+      history,
+      historyError,
+      loadingHistory,
+    } = this.props
     let { sortedInfo } = this.state
     sortedInfo = sortedInfo || {}
 
@@ -264,11 +271,19 @@ class CountriesDetails extends Component {
     const { countrySelectedForHistory } = this.state
     return (
       <div className='covid-world-table'>
-        <Table
-          columns={columns}
-          dataSource={countriesDataTransformed}
-          onChange={this.handleChange}
-        />
+        {!countriesError && (
+          <Table
+            dataSource={countriesDataTransformed}
+            columns={columns}
+            loading={loadingCountries}
+          />
+        )}
+        {countriesError && (
+          <Result
+            status='warning'
+            title='Was not able to fetch data. Please try again later.'
+          />
+        )}
         <DrawerWrapper
           title={`${countrySelectedForHistory}'s coronavirus history`}
           onClose={this.onClose}
@@ -298,6 +313,8 @@ CountriesDetails.propTypes = {
   fetchCountriesStat: PropTypes.func.isRequired,
   fetchCountryHistory: PropTypes.func.isRequired,
   countries: PropTypes.array.isRequired,
+  loadingCountries: PropTypes.bool.isRequired,
+  countriesError: PropTypes.string.isRequired,
   history: PropTypes.array.isRequired,
   loadingHistory: PropTypes.bool.isRequired,
   historyError: PropTypes.string.isRequired,
@@ -305,6 +322,8 @@ CountriesDetails.propTypes = {
 
 const mapStateToProps = state => ({
   countries: state.covid.countries,
+  loadingCountries: state.covid.loadingCountries,
+  countriesError: state.covid.countriesError,
   history: state.covid.countryHistory,
   loadingHistory: state.covid.loadingHistory,
   historyError: state.covid.historyError,

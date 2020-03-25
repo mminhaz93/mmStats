@@ -11,11 +11,16 @@ import {
 import {
   COVID_WORLD_TOTAL_STAT,
   COVID_COUNTRY,
-  COVID_COUNTRIES,
-  FETCH_COUNTRY_HISTORY_BEGIN,
-  FETCH_COUNTRY_HISTORY_SUCCESS,
-  FETCH_COUNTRY_HISTORY_FAILURE,
+  FETCH_COVID_COUNTRIES_BEGIN,
+  FETCH_COVID_COUNTRIES_SUCCESS,
+  FETCH_COVID_COUNTRIES_FAILURE,
+  FETCH_COVID_COUNTRY_HISTORY_BEGIN,
+  FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
+  FETCH_COVID_COUNTRY_HISTORY_FAILURE,
 } from './types'
+
+// loadingCountries,
+// countriesError,
 
 export const fetchWorldTotalStat = () => dispatch => {
   fetch(worldTotalUrl, {
@@ -31,23 +36,8 @@ export const fetchWorldTotalStat = () => dispatch => {
     )
 }
 
-// export const fetchCountryHistory = country => dispatch => {
-//   fetch(`${countryHistoryUrl}${country}`, {
-//     method: 'GET',
-//     headers,
-//   })
-//     .then(res => res.json())
-//     .then(data => {
-//       const { stat_by_country } = data
-//       dispatch({
-//         type: COVID_COUNTRY_HISTORY,
-//         payload: stat_by_country,
-//       })
-//     })
-// }
-
 // Handle HTTP errors since fetch won't.
-function handleErrors(response) {
+function handleHistoryErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText)
   }
@@ -55,16 +45,16 @@ function handleErrors(response) {
 }
 
 export const fetchHistoryBegin = () => ({
-  type: FETCH_COUNTRY_HISTORY_BEGIN,
+  type: FETCH_COVID_COUNTRY_HISTORY_BEGIN,
 })
 
 export const fetchHistorySuccess = history => ({
-  type: FETCH_COUNTRY_HISTORY_SUCCESS,
+  type: FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
   payload: { history },
 })
 
 export const fetchHistoryFailure = error => ({
-  type: FETCH_COUNTRY_HISTORY_FAILURE,
+  type: FETCH_COVID_COUNTRY_HISTORY_FAILURE,
   payload: { error },
 })
 
@@ -76,7 +66,7 @@ export function fetchCountryHistory(country) {
       method: 'GET',
       headers,
     })
-      .then(handleErrors)
+      .then(handleHistoryErrors)
       .then(res => res.json())
       .then(json => {
         dispatch(fetchHistorySuccess(json.stat_by_country))
@@ -100,17 +90,34 @@ export const fetchCountryStat = () => dispatch => {
     )
 }
 
-export const fetchCountriesStat = () => dispatch => {
-  fetch(countriesUrl, {
-    method: 'GET',
-    headers,
-  })
-    .then(res => res.json())
-    .then(data => {
-      const { countries_stat } = data
-      dispatch({
-        type: COVID_COUNTRIES,
-        payload: countries_stat,
-      })
+export const fetchCountriesBegin = () => ({
+  type: FETCH_COVID_COUNTRIES_BEGIN,
+})
+
+export const fetchCountriesSuccess = countries => ({
+  type: FETCH_COVID_COUNTRIES_SUCCESS,
+  payload: { countries },
+})
+
+export const fetchCountriesFailure = error => ({
+  type: FETCH_COVID_COUNTRIES_FAILURE,
+  payload: { error },
+})
+
+// https://daveceddia.com/where-fetch-data-redux/
+export function fetchCountriesStat() {
+  return dispatch => {
+    dispatch(fetchCountriesBegin())
+    return fetch(countriesUrl, {
+      method: 'GET',
+      headers,
     })
+      .then(handleHistoryErrors)
+      .then(res => res.json())
+      .then(json => {
+        dispatch(fetchCountriesSuccess(json.countries_stat))
+        return json.countries_stat
+      })
+      .catch(error => dispatch(fetchCountriesFailure(error)))
+  }
 }
