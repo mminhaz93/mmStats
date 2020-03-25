@@ -31,7 +31,7 @@ module.exports = {
         short_name: process.env.APP_NAME,
         start_url: '/',
         display: 'minimal-ui',
-        icon: path.join(__dirname, '/static/logo.png'),
+        icon: path.join(__dirname, '/static/logo.svg'),
       },
     },
     {

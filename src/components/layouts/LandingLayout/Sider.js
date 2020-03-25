@@ -32,11 +32,11 @@ class Sider extends Component {
         collapsed={collapsed}
         onCollapse={this.onCollapse}
       >
-        <div className='h-20 m-2 flex items-center justify-around'>
-          <LogoIcon className='h-10 w-10 mr-2 fill-primary-color' />
+        <div className='h-20 m-2 flex items-center justify-center'>
+          <LogoIcon className='h-10 w-10 fill-primary-color' />
           <Typography.Title
-            level={4}
-            className={classNames('text-primary-color', {
+            level={2}
+            className={classNames('text-primary-color ml-2 mt-4', {
               hidden: collapsed,
             })}
           >
