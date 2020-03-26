@@ -2,7 +2,6 @@ import React from 'react'
 import { Tabs } from 'antd'
 import { LineChart, GroupedColumnChart } from '@opd/g2plot-react'
 import { StickyContainer, Sticky } from 'react-sticky'
-import Overlap from './Overlap'
 
 const { TabPane } = Tabs
 
@@ -43,15 +42,6 @@ const Graphs = ({ data }) => {
       visible: true,
       triggerOn: 'mouseenter',
     },
-    interactions: [
-      {
-        type: 'slider',
-        cfg: {
-          start: 0.1,
-          end: 0.8,
-        },
-      },
-    ],
   }
 
   const barConfig = {
@@ -101,11 +91,11 @@ const Graphs = ({ data }) => {
             <GroupedColumnChart {...barConfig} />
           </section>
         </TabPane>
-        <TabPane tab='Overlap' key='3'>
+        {/* <TabPane tab='Overlap' key='3'>
           <section>
-            <Overlap />
+
           </section>
-        </TabPane>
+        </TabPane> */}
       </Tabs>
     </StickyContainer>
   )
