@@ -7,6 +7,7 @@ import {
   FETCH_COVID_COUNTRY_HISTORY_BEGIN,
   FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
   FETCH_COVID_COUNTRY_HISTORY_FAILURE,
+  TRANSFORM_COUNTRY_HISTORY_DATA,
 } from '../actions/types'
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   countryHistory: [],
   loadingHistory: false,
   historyError: null,
+  historyGraph: [],
 }
 
 export default function(state = initialState, action) {
@@ -69,6 +71,11 @@ export default function(state = initialState, action) {
         loadingHistory: false,
         historyError: action.payload.error,
         countryHistory: [],
+      }
+    case TRANSFORM_COUNTRY_HISTORY_DATA:
+      return {
+        ...state,
+        historyGraph: action.payload.graphData,
       }
     default:
       return state

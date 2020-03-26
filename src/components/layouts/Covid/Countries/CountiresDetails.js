@@ -20,6 +20,7 @@ import {
 import { fetchedNowDateFormat } from '../../../../util/helpers'
 import { drawerColumns } from './TableProperties'
 import DrawerWrapper from '../../../common/DrawerWrapper'
+import Graphs from '../../../common/Graphs/Graphs'
 
 class CountriesDetails extends Component {
   state = {
@@ -153,6 +154,7 @@ class CountriesDetails extends Component {
       history,
       historyError,
       loadingHistory,
+      historyGraph,
     } = this.props
     let { sortedInfo } = this.state
     sortedInfo = sortedInfo || {}
@@ -177,6 +179,7 @@ class CountriesDetails extends Component {
 
     const historyDataTransformed = _.map(history, item => {
       const newItem = _.clone(item)
+      newItem.record_date = newItem.record_date
       newItem.record_date = fetchedNowDateFormat(newItem.record_date)
       return newItem
     })
@@ -289,6 +292,7 @@ class CountriesDetails extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
+          {!historyError && <Graphs data={historyGraph} />}
           {!historyError && (
             <Table
               dataSource={historyDataTransformed}
@@ -325,6 +329,7 @@ const mapStateToProps = state => ({
   loadingCountries: state.covid.loadingCountries,
   countriesError: state.covid.countriesError,
   history: state.covid.countryHistory,
+  historyGraph: state.covid.historyGraph,
   loadingHistory: state.covid.loadingHistory,
   historyError: state.covid.historyError,
 })

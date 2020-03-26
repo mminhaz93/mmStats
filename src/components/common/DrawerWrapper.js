@@ -9,7 +9,7 @@ const DrawerWrapper = ({ title, onClose, visible, children }) => {
       placement='right'
       onClose={onClose}
       visible={visible}
-      width={650}
+      width={800}
     >
       {children}
     </Drawer>

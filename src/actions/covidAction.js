@@ -1,5 +1,8 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable camelcase */
 import fetch from 'cross-fetch'
+import _ from 'lodash'
+import { convertDate } from '../util/helpers'
 import {
   headers,
   worldTotalUrl,
@@ -17,6 +20,7 @@ import {
   FETCH_COVID_COUNTRY_HISTORY_BEGIN,
   FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
   FETCH_COVID_COUNTRY_HISTORY_FAILURE,
+  TRANSFORM_COUNTRY_HISTORY_DATA,
 } from './types'
 
 // loadingCountries,
@@ -53,6 +57,11 @@ export const fetchHistorySuccess = history => ({
   payload: { history },
 })
 
+export const convertHistoryForGraph = graphData => ({
+  type: TRANSFORM_COUNTRY_HISTORY_DATA,
+  payload: { graphData },
+})
+
 export const fetchHistoryFailure = error => ({
   type: FETCH_COVID_COUNTRY_HISTORY_FAILURE,
   payload: { error },
@@ -70,10 +79,65 @@ export function fetchCountryHistory(country) {
       .then(res => res.json())
       .then(json => {
         dispatch(fetchHistorySuccess(json.stat_by_country))
+        dispatch(
+          convertHistoryForGraph(
+            transformHistoryForGraph(json.stat_by_country),
+          ),
+        )
         return json.stat_by_country
       })
       .catch(error => dispatch(fetchHistoryFailure(error)))
   }
+}
+
+const transformHistoryForGraph = json => {
+  const returnNum = str => {
+    return !_.isNil(str) ? str.replace(/[, ]+/g, '').trim() : str
+  }
+  const allData = []
+  _.map(json, obj => {
+    // const transformData = [
+    const a = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.total_cases) * 1,
+      type: 'Total Cases',
+    }
+    allData.push(a)
+    const b = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.total_deaths) * 1,
+      type: 'Total Deaths',
+    }
+    allData.push(b)
+    const c = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.new_cases) * 1,
+      type: 'New Cases',
+    }
+    allData.push(c)
+    const d = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.active_cases) * 1,
+      type: 'Active Cases',
+    }
+    allData.push(d)
+    const e = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.total_deaths) * 1,
+      type: 'Total Deaths',
+    }
+    allData.push(e)
+    const f = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.total_recovered) * 1,
+      type: 'Total Recovered',
+    }
+    allData.push(f)
+
+    // return { totalCases, totalDeaths, newCases }
+  })
+  console.log(allData)
+  return allData
 }
 
 export const fetchCountryStat = () => dispatch => {
