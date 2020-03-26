@@ -133,10 +133,8 @@ const transformHistoryForGraph = json => {
       type: 'Total Recovered',
     }
     allData.push(f)
-
-    // return { totalCases, totalDeaths, newCases }
   })
-  console.log(allData)
+  // console.log(allData)
   return allData
 }
 

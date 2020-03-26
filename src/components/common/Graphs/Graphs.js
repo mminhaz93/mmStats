@@ -1,5 +1,5 @@
-import React from 'react'
-import { Tabs } from 'antd'
+import React, { useState } from 'react'
+import { Tabs, Switch } from 'antd'
 import { LineChart, GroupedColumnChart } from '@opd/g2plot-react'
 import { StickyContainer, Sticky } from 'react-sticky'
 
@@ -18,10 +18,13 @@ const renderTabBar = (props, DefaultTabBar) => (
 )
 
 const Graphs = ({ data }) => {
+  const [theme, setTheme] = useState('light')
+
   const lineChatConfig = {
-    title: {
+    description: {
       visible: true,
-      text: 'COVID-19',
+      text:
+        'Enable/Disable data fields from below to see individual breakdown of COVID-19',
     },
     padding: 'auto',
     forceFit: true,
@@ -30,18 +33,21 @@ const Graphs = ({ data }) => {
     yField: 'value',
     yAxis: {
       label: {
+        // 数值格式化为千分位
         formatter: v => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, s => `${s},`),
       },
     },
-    // legend: {
-    //   position: 'right-top',
-    // },
+    xAxis: {
+      type: 'time',
+      tickCount: 40,
+    },
     seriesField: 'type',
     responsive: true,
     connectedArea: {
       visible: true,
       triggerOn: 'mouseenter',
     },
+    theme: 'light',
   }
 
   const barConfig = {
@@ -59,10 +65,6 @@ const Graphs = ({ data }) => {
     yAxis: {
       min: 0,
     },
-    label: {
-      visible: false,
-      position: 'middle',
-    },
     connectedArea: {
       visible: true,
       triggerOn: 'mouseenter',
@@ -71,33 +73,45 @@ const Graphs = ({ data }) => {
       {
         type: 'slider',
         cfg: {
-          start: 0.1,
+          start: 0.0,
           end: 0.8,
         },
       },
     ],
+    theme: 'light',
+  }
+
+  function onChange(checked) {
+    checked ? setTheme('dark') : setTheme('light')
   }
 
   return (
-    <StickyContainer>
-      <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
-        <TabPane tab='Line Chart' key='1' style={{ height: 400 }}>
-          <section>
-            <LineChart {...lineChatConfig} />
-          </section>
-        </TabPane>
-        <TabPane tab='Bar Chart' key='2'>
-          <section>
-            <GroupedColumnChart {...barConfig} />
-          </section>
-        </TabPane>
-        {/* <TabPane tab='Overlap' key='3'>
+    <>
+      {/* <button onClick={() => setTheme('dark')}>Click me</button> */}
+      <Switch onChange={onChange} />
+      <p>
+        Current theme is : {theme}, {barConfig.theme}
+      </p>
+      <StickyContainer>
+        <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
+          <TabPane tab='Line Chart' key='1'>
+            <section>
+              <LineChart {...lineChatConfig} />
+            </section>
+          </TabPane>
+          <TabPane tab='Bar Chart' key='2'>
+            <section>
+              <GroupedColumnChart {...barConfig} />
+            </section>
+          </TabPane>
+          {/* <TabPane tab='Overlap' key='3'>
           <section>
 
           </section>
         </TabPane> */}
-      </Tabs>
-    </StickyContainer>
+        </Tabs>
+      </StickyContainer>
+    </>
   )
 }
 

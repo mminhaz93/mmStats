@@ -292,7 +292,7 @@ class CountriesDetails extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          {!historyError && <Graphs data={historyGraph} />}
+          {!historyError && !loadingHistory && <Graphs data={historyGraph} />}
           {!historyError && (
             <Table
               dataSource={historyDataTransformed}
@@ -320,6 +320,7 @@ CountriesDetails.propTypes = {
   loadingCountries: PropTypes.bool.isRequired,
   countriesError: PropTypes.string.isRequired,
   history: PropTypes.array.isRequired,
+  historyGraph: PropTypes.array.isRequired,
   loadingHistory: PropTypes.bool.isRequired,
   historyError: PropTypes.string.isRequired,
 }
