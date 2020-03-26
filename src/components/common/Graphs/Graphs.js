@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Tabs, Switch } from 'antd'
-import { LineChart, GroupedColumnChart } from '@opd/g2plot-react'
+import { LineChart, GroupedColumnChart, AreaChart } from '@opd/g2plot-react'
 import { StickyContainer, Sticky } from 'react-sticky'
 
 const { TabPane } = Tabs
@@ -23,8 +23,7 @@ const Graphs = ({ data }) => {
   const lineChatConfig = {
     description: {
       visible: true,
-      text:
-        'Enable/Disable data fields from below to see individual breakdown of COVID-19',
+      text: 'Click data fields from below to filter data',
     },
     padding: 'auto',
     forceFit: true,
@@ -33,13 +32,13 @@ const Graphs = ({ data }) => {
     yField: 'value',
     yAxis: {
       label: {
-        // 数值格式化为千分位
         formatter: v => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, s => `${s},`),
       },
     },
     xAxis: {
       type: 'time',
-      tickCount: 40,
+      mask: 'MM/DD',
+      tickCount: 10,
     },
     seriesField: 'type',
     responsive: true,
@@ -54,17 +53,13 @@ const Graphs = ({ data }) => {
     forceFit: true,
     description: {
       visible: true,
-      text:
-        'Enable/Disable data fields from below to see individual breakdown of COVID-19',
+      text: 'Click data fields from below to filter data',
     },
     padding: 'auto',
     data: data || [],
     xField: 'date',
     yField: 'value',
     stackField: 'type',
-    yAxis: {
-      min: 0,
-    },
     connectedArea: {
       visible: true,
       triggerOn: 'mouseenter',
@@ -81,6 +76,30 @@ const Graphs = ({ data }) => {
     theme: 'light',
   }
 
+  const areaConfig = {
+    description: {
+      visible: true,
+      text: 'Click data fields from below to filter data',
+    },
+    data: data || [],
+    xField: 'date',
+    yField: 'value',
+    stackField: 'type',
+    responsive: true,
+    connectedArea: {
+      visible: true,
+      triggerOn: 'mouseenter',
+    },
+    interactions: [
+      {
+        type: 'slider',
+        cfg: {
+          start: 0.0,
+          end: 0.8,
+        },
+      },
+    ],
+  }
   function onChange(checked) {
     checked ? setTheme('dark') : setTheme('light')
   }
@@ -88,10 +107,10 @@ const Graphs = ({ data }) => {
   return (
     <>
       {/* <button onClick={() => setTheme('dark')}>Click me</button> */}
-      <Switch onChange={onChange} />
+      {/* <Switch onChange={onChange} />
       <p>
         Current theme is : {theme}, {barConfig.theme}
-      </p>
+      </p> */}
       <StickyContainer>
         <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
           <TabPane tab='Line Chart' key='1'>
@@ -104,11 +123,11 @@ const Graphs = ({ data }) => {
               <GroupedColumnChart {...barConfig} />
             </section>
           </TabPane>
-          {/* <TabPane tab='Overlap' key='3'>
-          <section>
-
-          </section>
-        </TabPane> */}
+          <TabPane tab='Area Chart' key='3'>
+            <section>
+              <AreaChart {...areaConfig} />
+            </section>
+          </TabPane>
         </Tabs>
       </StickyContainer>
     </>
