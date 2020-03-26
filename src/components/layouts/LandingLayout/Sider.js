@@ -40,7 +40,7 @@ class Sider extends Component {
               hidden: collapsed,
             })}
           >
-            MoStats
+            MmStats
           </Typography.Title>
         </div>
         <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
