@@ -156,8 +156,6 @@ class CountriesDetails extends Component {
       loadingHistory,
       historyGraph,
     } = this.props
-    let { sortedInfo } = this.state
-    sortedInfo = sortedInfo || {}
 
     const countriesDataTransformed = _.map(countries, item => {
       const replaceComma = str => {
@@ -184,6 +182,8 @@ class CountriesDetails extends Component {
       return newItem
     })
 
+    let { sortedInfo } = this.state
+    sortedInfo = sortedInfo || {}
     const columns = [
       {
         title: 'Country',
@@ -279,6 +279,7 @@ class CountriesDetails extends Component {
             dataSource={countriesDataTransformed}
             columns={columns}
             loading={loadingCountries}
+            onChange={this.handleChange}
           />
         )}
         {countriesError && (
