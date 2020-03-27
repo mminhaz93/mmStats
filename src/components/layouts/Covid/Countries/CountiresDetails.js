@@ -23,7 +23,8 @@ import {
   transformCountryHistoryData,
 } from './TableProperties'
 import DrawerWrapper from '../../../common/DrawerWrapper'
-import Graphs from '../../../common/Graphs/Graphs'
+import Graphs from './History/Graphs'
+import CountriesGraphs from './CountriesGraphs'
 
 class CountriesDetails extends Component {
   state = {
@@ -55,12 +56,6 @@ class CountriesDetails extends Component {
       visible: false,
     })
   }
-
-  // Sorting
-  // pagination, filters is needed for sort for some reason
-  // handleChange = (pagination, filters, sorter, extra) => {
-  //   // console.log('params', pagination, filters, sorter, extra)
-  // }
 
   // Searching for country
   getColumnSearchProps = dataIndex => ({
@@ -154,7 +149,8 @@ class CountriesDetails extends Component {
       history,
       historyError,
       loadingHistory,
-      historyGraph,
+      historyGraphData,
+      countriesGraphData,
     } = this.props
 
     const getHistoryOfCountry = record => {
@@ -191,43 +187,50 @@ class CountriesDetails extends Component {
     ]
     const { countrySelectedForHistory } = this.state
     return (
-      <div className='covid-world-table'>
-        {!countriesError && (
-          <Table
-            dataSource={transformCountiresData(countries)}
-            columns={columns}
-            loading={loadingCountries}
-            // onChange={this.handleChange}
-          />
+      <>
+        {!countriesError && !loadingCountries && (
+          <CountriesGraphs data={countriesGraphData} />
         )}
-        {countriesError && (
-          <Result
-            status='warning'
-            title='Was not able to fetch data. Please try again later.'
-          />
-        )}
-        <DrawerWrapper
-          title={`${countrySelectedForHistory}'s coronavirus history`}
-          onClose={this.onClose}
-          visible={this.state.visible}
-        >
-          {!historyError && !loadingHistory && <Graphs data={historyGraph} />}
-          {!historyError && (
+
+        <div className='covid-world-table'>
+          {!countriesError && (
             <Table
-              dataSource={transformCountryHistoryData(history)}
-              columns={drawerColumns}
-              size='small'
-              loading={loadingHistory}
+              dataSource={transformCountiresData(countries)}
+              columns={columns}
+              loading={loadingCountries}
             />
           )}
-          {historyError && (
+          {countriesError && (
             <Result
               status='warning'
               title='Was not able to fetch data. Please try again later.'
             />
           )}
-        </DrawerWrapper>
-      </div>
+          <DrawerWrapper
+            title={`${countrySelectedForHistory}'s coronavirus history`}
+            onClose={this.onClose}
+            visible={this.state.visible}
+          >
+            {!historyError && !loadingHistory && (
+              <Graphs data={historyGraphData} />
+            )}
+            {!historyError && (
+              <Table
+                dataSource={transformCountryHistoryData(history)}
+                columns={drawerColumns}
+                size='small'
+                loading={loadingHistory}
+              />
+            )}
+            {historyError && (
+              <Result
+                status='warning'
+                title='Was not able to fetch data. Please try again later.'
+              />
+            )}
+          </DrawerWrapper>
+        </div>
+      </>
     )
   }
 }
@@ -239,7 +242,8 @@ CountriesDetails.propTypes = {
   loadingCountries: PropTypes.bool.isRequired,
   countriesError: PropTypes.string.isRequired,
   history: PropTypes.array.isRequired,
-  historyGraph: PropTypes.array.isRequired,
+  historyGraphData: PropTypes.array.isRequired,
+  countriesGraphData: PropTypes.array.isRequired,
   loadingHistory: PropTypes.bool.isRequired,
   historyError: PropTypes.string.isRequired,
 }
@@ -249,7 +253,8 @@ const mapStateToProps = state => ({
   loadingCountries: state.covid.loadingCountries,
   countriesError: state.covid.countriesError,
   history: state.covid.countryHistory,
-  historyGraph: state.covid.historyGraph,
+  historyGraphData: state.covid.historyGraphData,
+  countriesGraphData: state.covid.countriesGraphData,
   loadingHistory: state.covid.loadingHistory,
   historyError: state.covid.historyError,
 })

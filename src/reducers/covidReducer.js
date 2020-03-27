@@ -4,22 +4,24 @@ import {
   FETCH_COVID_COUNTRIES_BEGIN,
   FETCH_COVID_COUNTRIES_SUCCESS,
   FETCH_COVID_COUNTRIES_FAILURE,
+  TRANSFORM_COUNTRIES_DATA_FOR_GRAPH,
   FETCH_COVID_COUNTRY_HISTORY_BEGIN,
   FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
   FETCH_COVID_COUNTRY_HISTORY_FAILURE,
-  TRANSFORM_COUNTRY_HISTORY_DATA,
+  TRANSFORM_COUNTRY_HISTORY_DATA_FOR_GRAPH,
 } from '../actions/types'
 
 const initialState = {
   items: [],
   countryItems: [],
   countries: [],
+  countriesGraphData: [],
   loadingCountries: false,
   countriesError: null,
   countryHistory: [],
   loadingHistory: false,
   historyError: null,
-  historyGraph: [],
+  historyGraphData: [],
 }
 
 export default function(state = initialState, action) {
@@ -40,6 +42,11 @@ export default function(state = initialState, action) {
         ...state,
         loadingCountries: false,
         countries: action.payload.countries,
+      }
+    case TRANSFORM_COUNTRIES_DATA_FOR_GRAPH:
+      return {
+        ...state,
+        countriesGraphData: action.payload.graphData,
       }
     case FETCH_COVID_COUNTRIES_FAILURE:
       return {
@@ -72,10 +79,10 @@ export default function(state = initialState, action) {
         historyError: action.payload.error,
         countryHistory: [],
       }
-    case TRANSFORM_COUNTRY_HISTORY_DATA:
+    case TRANSFORM_COUNTRY_HISTORY_DATA_FOR_GRAPH:
       return {
         ...state,
-        historyGraph: action.payload.graphData,
+        historyGraphData: action.payload.graphData,
       }
     default:
       return state

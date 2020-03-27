@@ -32,7 +32,7 @@ export const countiresColumns = [
     sorter: (a, b) => a.active_cases - b.active_cases,
   },
   {
-    title: 'Serious Critical',
+    title: 'Critical Cases',
     dataIndex: 'serious_critical',
     key: 'serious_critical',
     align: 'center',
@@ -91,7 +91,7 @@ export const drawerColumns = [
     key: 'active_cases',
   },
   {
-    title: 'Serious Critical',
+    title: 'Critical Cases',
     dataIndex: 'serious_critical',
     key: 'serious_critical',
     align: 'center',

@@ -16,11 +16,12 @@ import {
   COVID_COUNTRY,
   FETCH_COVID_COUNTRIES_BEGIN,
   FETCH_COVID_COUNTRIES_SUCCESS,
+  TRANSFORM_COUNTRIES_DATA_FOR_GRAPH,
   FETCH_COVID_COUNTRIES_FAILURE,
   FETCH_COVID_COUNTRY_HISTORY_BEGIN,
   FETCH_COVID_COUNTRY_HISTORY_SUCCESS,
   FETCH_COVID_COUNTRY_HISTORY_FAILURE,
-  TRANSFORM_COUNTRY_HISTORY_DATA,
+  TRANSFORM_COUNTRY_HISTORY_DATA_FOR_GRAPH,
 } from './types'
 
 // loadingCountries,
@@ -58,7 +59,7 @@ export const fetchHistorySuccess = history => ({
 })
 
 export const convertHistoryForGraph = graphData => ({
-  type: TRANSFORM_COUNTRY_HISTORY_DATA,
+  type: TRANSFORM_COUNTRY_HISTORY_DATA_FOR_GRAPH,
   payload: { graphData },
 })
 
@@ -123,8 +124,8 @@ const transformHistoryForGraph = json => {
     allData.push(d)
     const e = {
       date: convertDate(obj.record_date, 'LL'),
-      value: returnNum(obj.total_deaths) * 1,
-      type: 'Total Deaths',
+      value: returnNum(obj.new_deaths) * 1,
+      type: 'New Deaths',
     }
     allData.push(e)
     const f = {
@@ -133,6 +134,12 @@ const transformHistoryForGraph = json => {
       type: 'Total Recovered',
     }
     allData.push(f)
+    const g = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.serious_critical) * 1,
+      type: 'Critical Cases',
+    }
+    allData.push(g)
   })
   // console.log(allData)
   return allData
@@ -161,6 +168,11 @@ export const fetchCountriesSuccess = countries => ({
   payload: { countries },
 })
 
+export const convertCountriesForGraph = graphData => ({
+  type: TRANSFORM_COUNTRIES_DATA_FOR_GRAPH,
+  payload: { graphData },
+})
+
 export const fetchCountriesFailure = error => ({
   type: FETCH_COVID_COUNTRIES_FAILURE,
   payload: { error },
@@ -178,8 +190,72 @@ export function fetchCountriesStat() {
       .then(res => res.json())
       .then(json => {
         dispatch(fetchCountriesSuccess(json.countries_stat))
+        dispatch(
+          convertCountriesForGraph(
+            transformCountriesForGraph(json.countries_stat),
+          ),
+        )
         return json.countries_stat
       })
       .catch(error => dispatch(fetchCountriesFailure(error)))
   }
+}
+
+const transformCountriesForGraph = json => {
+  const returnNum = str => {
+    return !_.isNil(str) ? str.replace(/[, ]+/g, '').trim() : str
+  }
+  const allData = []
+  _.map(json, obj => {
+    const a = {
+      country: obj.country_name,
+      value: returnNum(obj.cases) * 1,
+      type: 'Total Cases',
+    }
+    allData.push(a)
+    const b = {
+      country: obj.country_name,
+      value: returnNum(obj.deaths) * 1,
+      type: 'Total Deaths',
+    }
+    allData.push(b)
+    const e = {
+      country: obj.country_name,
+      value: returnNum(obj.total_deaths) * 1,
+      type: 'Total Deaths',
+    }
+    allData.push(e)
+    const f = {
+      country: obj.country_name,
+      value: returnNum(obj.total_recovered) * 1,
+      type: 'Total Recovered',
+    }
+    allData.push(f)
+    const c = {
+      country: obj.country_name,
+      value: returnNum(obj.new_cases) * 1,
+      type: 'New Cases',
+    }
+    allData.push(c)
+    const d = {
+      country: obj.country_name,
+      value: returnNum(obj.active_cases) * 1,
+      type: 'Active Cases',
+    }
+    allData.push(d)
+    const g = {
+      country: obj.country_name,
+      value: returnNum(obj.new_deaths) * 1,
+      type: 'New Deaths',
+    }
+    allData.push(g)
+
+    const h = {
+      country: obj.country_name,
+      value: returnNum(obj.serious_critical) * 1,
+      type: 'Critical Cases',
+    }
+    allData.push(h)
+  })
+  return allData
 }

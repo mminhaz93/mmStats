@@ -19,7 +19,7 @@ const renderTabBar = (props, DefaultTabBar) => (
   </Sticky>
 )
 
-const Graphs = ({ data }) => {
+const CountriesGraphs = ({ data }) => {
   const lineChatConfig = {
     description: {
       visible: true,
@@ -28,7 +28,7 @@ const Graphs = ({ data }) => {
     padding: 'auto',
     forceFit: true,
     data: data || [],
-    xField: 'date',
+    xField: 'country',
     yField: 'value',
     yAxis: {
       label: {
@@ -36,9 +36,7 @@ const Graphs = ({ data }) => {
       },
     },
     xAxis: {
-      type: 'time',
-      mask: 'MM/DD',
-      tickCount: 10,
+      tickCount: 20,
     },
     seriesField: 'type',
     responsive: true,
@@ -47,6 +45,15 @@ const Graphs = ({ data }) => {
       triggerOn: 'mouseenter',
     },
     theme: 'light',
+    interactions: [
+      {
+        type: 'scrollbar',
+        cfg: {
+          start: 0.0,
+          end: 0.1,
+        },
+      },
+    ],
   }
 
   const barConfig = {
@@ -57,7 +64,7 @@ const Graphs = ({ data }) => {
     },
     padding: 'auto',
     data: data || [],
-    xField: 'date',
+    xField: 'country',
     yField: 'value',
     stackField: 'type',
     connectedArea: {
@@ -69,7 +76,7 @@ const Graphs = ({ data }) => {
         type: 'slider',
         cfg: {
           start: 0.0,
-          end: 0.8,
+          end: 0.1,
         },
       },
     ],
@@ -82,7 +89,7 @@ const Graphs = ({ data }) => {
       text: 'Click data fields from below to filter data',
     },
     data: data || [],
-    xField: 'date',
+    xField: 'country',
     yField: 'value',
     stackField: 'type',
     responsive: true,
@@ -95,7 +102,7 @@ const Graphs = ({ data }) => {
         type: 'slider',
         cfg: {
           start: 0.0,
-          end: 0.8,
+          end: 0.1,
         },
       },
     ],
@@ -103,11 +110,6 @@ const Graphs = ({ data }) => {
 
   return (
     <>
-      {/* <button onClick={() => setTheme('dark')}>Click me</button> */}
-      {/* <Switch onChange={onChange} />
-      <p>
-        Current theme is : {theme}, {barConfig.theme}
-      </p> */}
       <StickyContainer>
         <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
           <TabPane tab='Line Chart' key='1'>
@@ -131,8 +133,8 @@ const Graphs = ({ data }) => {
   )
 }
 
-Graphs.propTypes = {
+CountriesGraphs.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-export default Graphs
+export default CountriesGraphs
