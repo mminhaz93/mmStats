@@ -253,7 +253,7 @@ class CountriesDetails extends Component {
         sortOrder: sortedInfo.columnKey === 'new_deaths' && sortedInfo.order,
       },
       {
-        title: '',
+        title: 'History',
         key: 'operation',
         fixed: 'right',
         width: 50,
