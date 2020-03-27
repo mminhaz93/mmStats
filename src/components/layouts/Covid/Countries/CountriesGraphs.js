@@ -45,15 +45,6 @@ const CountriesGraphs = ({ data }) => {
       triggerOn: 'mouseenter',
     },
     theme: 'light',
-    interactions: [
-      {
-        type: 'scrollbar',
-        cfg: {
-          start: 0.0,
-          end: 0.1,
-        },
-      },
-    ],
   }
 
   const barConfig = {
