@@ -12,13 +12,16 @@ import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
 import { SearchOutlined, EllipsisOutlined } from '@ant-design/icons'
-import _ from 'lodash'
 import {
   fetchCountriesStat,
   fetchCountryHistory,
 } from '../../../../actions/covidAction'
-import { fetchedNowDateFormat } from '../../../../util/helpers'
-import { drawerColumns } from './TableProperties'
+import {
+  countiresColumns,
+  drawerColumns,
+  transformCountiresData,
+  transformCountryHistoryData,
+} from './TableProperties'
 import DrawerWrapper from '../../../common/DrawerWrapper'
 import Graphs from '../../../common/Graphs/Graphs'
 
@@ -26,7 +29,6 @@ class CountriesDetails extends Component {
   state = {
     searchText: '',
     searchedColumn: '',
-    sortedInfo: null,
     countrySelectedForHistory: '',
     visible: false,
   }
@@ -56,11 +58,9 @@ class CountriesDetails extends Component {
 
   // Sorting
   // pagination, filters is needed for sort for some reason
-  handleChange = (pagination, filters, sorter) => {
-    this.setState({
-      sortedInfo: sorter,
-    })
-  }
+  // handleChange = (pagination, filters, sorter, extra) => {
+  //   // console.log('params', pagination, filters, sorter, extra)
+  // }
 
   // Searching for country
   getColumnSearchProps = dataIndex => ({
@@ -157,33 +157,19 @@ class CountriesDetails extends Component {
       historyGraph,
     } = this.props
 
-    const countriesDataTransformed = _.map(countries, item => {
-      const replaceComma = str => {
-        return !_.isNil(str) ? str.replace(/[, ]+/g, '').trim() : str
-      }
-
-      const newItem = _.clone(item)
-      newItem.cases = replaceComma(newItem.cases) * 1
-      newItem.deaths = replaceComma(newItem.deaths) * 1
-      newItem.total_recovered = replaceComma(newItem.total_recovered) * 1
-      newItem.new_death = replaceComma(newItem.new_death) * 1
-      newItem.new_cases = replaceComma(newItem.new_cases) * 1
-      newItem.serious_critical = replaceComma(newItem.serious_critical) * 1
-      newItem.active_cases = replaceComma(newItem.active_cases) * 1
-      newItem.total_cases_per_1m_population =
-        replaceComma(newItem.total_cases_per_1m_population) * 1
-      return newItem
-    })
-
-    const historyDataTransformed = _.map(history, item => {
-      const newItem = _.clone(item)
-      newItem.record_date = newItem.record_date
-      newItem.record_date = fetchedNowDateFormat(newItem.record_date)
-      return newItem
-    })
-
-    let { sortedInfo } = this.state
-    sortedInfo = sortedInfo || {}
+    const getHistoryOfCountry = record => {
+      return (
+        <Tooltip placement='top' title='View History'>
+          <Button
+            className='covid-country-history'
+            size='small'
+            onClick={() => this.handleDrawer(record.country_name)}
+          >
+            <EllipsisOutlined />
+          </Button>
+        </Tooltip>
+      )
+    }
     const columns = [
       {
         title: 'Country',
@@ -191,84 +177,16 @@ class CountriesDetails extends Component {
         key: 'country_name',
         ...this.getColumnSearchProps('country_name'),
         sorter: (a, b) => `${a.country_name}`.localeCompare(b.country_name),
-        sortOrder: sortedInfo.columnKey === 'country_name' && sortedInfo.order,
         width: 150,
       },
-      {
-        title: 'Total Cases',
-        dataIndex: 'cases',
-        key: 'cases',
-        align: 'center',
-        sorter: (a, b) => a.cases - b.cases,
-        sortOrder: sortedInfo.columnKey === 'cases' && sortedInfo.order,
-      },
-      {
-        title: 'Total Recovered',
-        dataIndex: 'total_recovered',
-        key: 'total_recovered',
-        align: 'center',
-        sorter: (a, b) => a.total_recovered - b.total_recovered,
-        sortOrder:
-          sortedInfo.columnKey === 'total_recovered' && sortedInfo.order,
-      },
-      {
-        title: 'Deaths',
-        dataIndex: 'deaths',
-        key: 'deaths',
-        align: 'center',
-        sorter: (a, b) => a.deaths - b.deaths,
-        sortOrder: sortedInfo.columnKey === 'deaths' && sortedInfo.order,
-      },
-      {
-        title: 'Active Cases',
-        dataIndex: 'active_cases',
-        key: 'active_cases',
-        align: 'center',
-        sorter: (a, b) => a.active_cases - b.active_cases,
-        sortOrder: sortedInfo.columnKey === 'active_cases' && sortedInfo.order,
-      },
-      {
-        title: 'Serious Critical',
-        dataIndex: 'serious_critical',
-        key: 'serious_critical',
-        align: 'center',
-        sorter: (a, b) => a.serious_critical - b.serious_critical,
-        sortOrder:
-          sortedInfo.columnKey === 'serious_critical' && sortedInfo.order,
-      },
-      {
-        title: 'New Cases',
-        dataIndex: 'new_cases',
-        key: 'new_cases',
-        align: 'center',
-        sorter: (a, b) => a.new_cases - b.new_cases,
-        sortOrder: sortedInfo.columnKey === 'new_cases' && sortedInfo.order,
-      },
-      {
-        title: 'New Deaths',
-        dataIndex: 'new_deaths',
-        key: 'new_deaths',
-        align: 'center',
-        sorter: (a, b) => a.new_deaths - b.new_deaths,
-        sortOrder: sortedInfo.columnKey === 'new_deaths' && sortedInfo.order,
-      },
+      ...countiresColumns,
       {
         title: 'History',
         key: 'operation',
         fixed: 'right',
         width: 50,
         align: 'right',
-        render: record => (
-          <Tooltip placement='top' title='View History'>
-            <Button
-              className='covid-country-history'
-              size='small'
-              onClick={() => this.handleDrawer(record.country_name)}
-            >
-              <EllipsisOutlined />
-            </Button>
-          </Tooltip>
-        ),
+        render: getHistoryOfCountry,
       },
     ]
     const { countrySelectedForHistory } = this.state
@@ -276,10 +194,10 @@ class CountriesDetails extends Component {
       <div className='covid-world-table'>
         {!countriesError && (
           <Table
-            dataSource={countriesDataTransformed}
+            dataSource={transformCountiresData(countries)}
             columns={columns}
             loading={loadingCountries}
-            onChange={this.handleChange}
+            // onChange={this.handleChange}
           />
         )}
         {countriesError && (
@@ -296,7 +214,7 @@ class CountriesDetails extends Component {
           {!historyError && !loadingHistory && <Graphs data={historyGraph} />}
           {!historyError && (
             <Table
-              dataSource={historyDataTransformed}
+              dataSource={transformCountryHistoryData(history)}
               columns={drawerColumns}
               size='small'
               loading={loadingHistory}

@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { Tabs, Switch } from 'antd'
+/* eslint-disable react/forbid-prop-types */
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Tabs } from 'antd'
 import { LineChart, GroupedColumnChart, AreaChart } from '@opd/g2plot-react'
 import { StickyContainer, Sticky } from 'react-sticky'
 
@@ -18,8 +20,6 @@ const renderTabBar = (props, DefaultTabBar) => (
 )
 
 const Graphs = ({ data }) => {
-  const [theme, setTheme] = useState('light')
-
   const lineChatConfig = {
     description: {
       visible: true,
@@ -100,9 +100,6 @@ const Graphs = ({ data }) => {
       },
     ],
   }
-  function onChange(checked) {
-    checked ? setTheme('dark') : setTheme('light')
-  }
 
   return (
     <>
@@ -132,6 +129,10 @@ const Graphs = ({ data }) => {
       </StickyContainer>
     </>
   )
+}
+
+Graphs.propTypes = {
+  data: PropTypes.object.isRequired,
 }
 
 export default Graphs
