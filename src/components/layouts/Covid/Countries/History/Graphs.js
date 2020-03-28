@@ -41,6 +41,7 @@ const Graphs = ({ data }) => {
       tickCount: 10,
     },
     seriesField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     responsive: true,
     connectedArea: {
       visible: true,
@@ -59,6 +60,7 @@ const Graphs = ({ data }) => {
     xField: 'date',
     yField: 'value',
     stackField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     connectedArea: {
       visible: true,
       triggerOn: 'mouseenter',
@@ -83,6 +85,7 @@ const Graphs = ({ data }) => {
     xField: 'date',
     yField: 'value',
     stackField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     responsive: true,
     connectedArea: {
       visible: true,

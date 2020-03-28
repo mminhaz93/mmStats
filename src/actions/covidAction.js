@@ -110,36 +110,38 @@ const transformHistoryForGraph = json => {
       type: 'Total Deaths',
     }
     allData.push(b)
-    const c = {
-      date: convertDate(obj.record_date, 'LL'),
-      value: returnNum(obj.new_cases) * 1,
-      type: 'New Cases',
-    }
-    allData.push(c)
     const d = {
       date: convertDate(obj.record_date, 'LL'),
       value: returnNum(obj.active_cases) * 1,
       type: 'Active Cases',
     }
     allData.push(d)
-    const e = {
+
+    /*     
+  const c = {
+      date: convertDate(obj.record_date, 'LL'),
+      value: returnNum(obj.new_cases) * 1,
+      type: 'New Cases',
+    }
+    allData.push(c) 
+  const e = {
       date: convertDate(obj.record_date, 'LL'),
       value: returnNum(obj.new_deaths) * 1,
       type: 'New Deaths',
     }
-    allData.push(e)
-    const f = {
+    allData.push(e) 
+  const f = {
       date: convertDate(obj.record_date, 'LL'),
       value: returnNum(obj.total_recovered) * 1,
       type: 'Total Recovered',
     }
-    allData.push(f)
-    const g = {
+    allData.push(f) 
+  const g = {
       date: convertDate(obj.record_date, 'LL'),
       value: returnNum(obj.serious_critical) * 1,
       type: 'Critical Cases',
     }
-    allData.push(g)
+    allData.push(g) */
   })
   // console.log(allData)
   return allData
@@ -219,7 +221,13 @@ const transformCountriesForGraph = json => {
       type: 'Total Deaths',
     }
     allData.push(b)
-    const f = {
+    const d = {
+      country: obj.country_name,
+      value: returnNum(obj.active_cases) * 1,
+      type: 'Active Cases',
+    }
+    allData.push(d)
+    /*  const f = {
       country: obj.country_name,
       value: returnNum(obj.total_recovered) * 1,
       type: 'Total Recovered',
@@ -231,12 +239,7 @@ const transformCountriesForGraph = json => {
       type: 'New Cases',
     }
     allData.push(c)
-    const d = {
-      country: obj.country_name,
-      value: returnNum(obj.active_cases) * 1,
-      type: 'Active Cases',
-    }
-    allData.push(d)
+
     const g = {
       country: obj.country_name,
       value: returnNum(obj.new_deaths) * 1,
@@ -249,7 +252,7 @@ const transformCountriesForGraph = json => {
       value: returnNum(obj.serious_critical) * 1,
       type: 'Critical Cases',
     }
-    allData.push(h)
+    allData.push(h) */
   })
   return allData
 }

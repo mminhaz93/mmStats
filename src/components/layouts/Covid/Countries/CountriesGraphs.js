@@ -59,6 +59,7 @@ const CountriesGraphs = ({ data, searchedCountry }) => {
       tickCount: 20,
     },
     seriesField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     responsive: true,
     connectedArea: {
       visible: true,
@@ -77,6 +78,7 @@ const CountriesGraphs = ({ data, searchedCountry }) => {
     xField: 'country',
     yField: 'value',
     stackField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     connectedArea: {
       visible: true,
       triggerOn: 'mouseenter',
@@ -101,6 +103,7 @@ const CountriesGraphs = ({ data, searchedCountry }) => {
     xField: 'country',
     yField: 'value',
     stackField: 'type',
+    color: ['#009387', '#d96d6f', '#fab36f'],
     responsive: true,
     connectedArea: {
       visible: true,
