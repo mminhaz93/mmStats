@@ -1,8 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Tabs } from 'antd'
 import { LineChart, GroupedColumnChart, AreaChart } from '@opd/g2plot-react'
+
 import { StickyContainer, Sticky } from 'react-sticky'
 
 const { TabPane } = Tabs
@@ -19,7 +21,28 @@ const renderTabBar = (props, DefaultTabBar) => (
   </Sticky>
 )
 
-const CountriesGraphs = ({ data }) => {
+const CountriesGraphs = ({ data, searchedCountry, defaultTab }) => {
+  // const copyData = _.clone(data)
+  const countrySearchedCopy = searchedCountry.toLowerCase()
+
+  const transformCountryHistoryData = _.map(data, item => {
+    const newItem = _.clone(item)
+    newItem.country = newItem.country.toLowerCase()
+    return newItem
+  })
+
+  const filteredData = () => {
+    let dataFiltered = []
+    if (countrySearchedCopy === '') {
+      dataFiltered = transformCountryHistoryData
+    } else {
+      dataFiltered = _.filter(transformCountryHistoryData, {
+        country: countrySearchedCopy,
+      })
+    }
+    return dataFiltered
+  }
+
   const lineChatConfig = {
     description: {
       visible: true,
@@ -27,7 +50,7 @@ const CountriesGraphs = ({ data }) => {
     },
     padding: 'auto',
     forceFit: true,
-    data: data || [],
+    data: filteredData() || [],
     xField: 'country',
     yField: 'value',
     yAxis: {
@@ -44,7 +67,6 @@ const CountriesGraphs = ({ data }) => {
       visible: true,
       triggerOn: 'mouseenter',
     },
-    theme: 'light',
   }
 
   const barConfig = {
@@ -54,7 +76,7 @@ const CountriesGraphs = ({ data }) => {
       text: 'Click data fields from below to filter data',
     },
     padding: 'auto',
-    data: data || [],
+    data: filteredData() || [],
     xField: 'country',
     yField: 'value',
     stackField: 'type',
@@ -71,7 +93,6 @@ const CountriesGraphs = ({ data }) => {
         },
       },
     ],
-    theme: 'light',
   }
 
   const areaConfig = {
@@ -79,7 +100,7 @@ const CountriesGraphs = ({ data }) => {
       visible: true,
       text: 'Click data fields from below to filter data',
     },
-    data: data || [],
+    data: filteredData() || [],
     xField: 'country',
     yField: 'value',
     stackField: 'type',
@@ -102,7 +123,11 @@ const CountriesGraphs = ({ data }) => {
   return (
     <>
       <StickyContainer>
-        <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
+        <Tabs
+          defaultActiveKey='1'
+          activeKey={defaultTab}
+          renderTabBar={renderTabBar}
+        >
           <TabPane tab='Line Chart' key='1'>
             <section>
               <LineChart {...lineChatConfig} />
@@ -125,7 +150,9 @@ const CountriesGraphs = ({ data }) => {
 }
 
 CountriesGraphs.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
+  searchedCountry: PropTypes.string.isRequired,
+  defaultTab: PropTypes.string.isRequired,
 }
 
 export default CountriesGraphs

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Drawer } from 'antd'
@@ -20,7 +21,7 @@ DrawerWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.array.isRequired,
 }
 
 export default DrawerWrapper

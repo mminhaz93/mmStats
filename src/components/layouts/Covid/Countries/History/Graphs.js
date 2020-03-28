@@ -46,7 +46,7 @@ const Graphs = ({ data }) => {
       visible: true,
       triggerOn: 'mouseenter',
     },
-    theme: 'light',
+
     interactions: [
       {
         type: 'slider',
@@ -82,7 +82,6 @@ const Graphs = ({ data }) => {
         },
       },
     ],
-    theme: 'light',
   }
 
   const areaConfig = {
@@ -136,7 +135,7 @@ const Graphs = ({ data }) => {
 }
 
 Graphs.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 }
 
 export default Graphs

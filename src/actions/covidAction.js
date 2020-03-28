@@ -219,12 +219,6 @@ const transformCountriesForGraph = json => {
       type: 'Total Deaths',
     }
     allData.push(b)
-    const e = {
-      country: obj.country_name,
-      value: returnNum(obj.total_deaths) * 1,
-      type: 'Total Deaths',
-    }
-    allData.push(e)
     const f = {
       country: obj.country_name,
       value: returnNum(obj.total_recovered) * 1,

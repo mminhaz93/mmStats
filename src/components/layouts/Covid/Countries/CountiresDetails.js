@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -28,7 +29,8 @@ import CountriesGraphs from './CountriesGraphs'
 
 class CountriesDetails extends Component {
   state = {
-    searchText: '',
+    searchedCountry: '',
+    defaultTab: '1',
     searchedColumn: '',
     countrySelectedForHistory: '',
     visible: false,
@@ -119,7 +121,7 @@ class CountriesDetails extends Component {
             padding: 0,
             color: '#fff',
           }}
-          searchWords={[this.state.searchText]}
+          searchWords={[this.state.searchedCountry]}
           autoEscape
           textToHighlight={text.toString()}
         />
@@ -131,14 +133,15 @@ class CountriesDetails extends Component {
   handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm()
     this.setState({
-      searchText: selectedKeys[0],
+      searchedCountry: selectedKeys[0],
       searchedColumn: dataIndex,
+      defaultTab: '2',
     })
   }
 
   handleReset = clearFilters => {
     clearFilters()
-    this.setState({ searchText: '' })
+    this.setState({ searchedCountry: '', defaultTab: '1' })
   }
 
   render() {
@@ -185,11 +188,19 @@ class CountriesDetails extends Component {
         render: getHistoryOfCountry,
       },
     ]
-    const { countrySelectedForHistory } = this.state
+    const {
+      countrySelectedForHistory,
+      searchedCountry,
+      defaultTab,
+    } = this.state
     return (
       <>
         {!countriesError && !loadingCountries && (
-          <CountriesGraphs data={countriesGraphData} />
+          <CountriesGraphs
+            data={countriesGraphData}
+            searchedCountry={searchedCountry}
+            defaultTab={defaultTab}
+          />
         )}
 
         <div className='covid-world-table'>
@@ -240,12 +251,12 @@ CountriesDetails.propTypes = {
   fetchCountryHistory: PropTypes.func.isRequired,
   countries: PropTypes.array.isRequired,
   loadingCountries: PropTypes.bool.isRequired,
-  countriesError: PropTypes.string.isRequired,
+  countriesError: PropTypes.string,
   history: PropTypes.array.isRequired,
   historyGraphData: PropTypes.array.isRequired,
   countriesGraphData: PropTypes.array.isRequired,
   loadingHistory: PropTypes.bool.isRequired,
-  historyError: PropTypes.string.isRequired,
+  historyError: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
