@@ -46,16 +46,6 @@ const Graphs = ({ data }) => {
       visible: true,
       triggerOn: 'mouseenter',
     },
-
-    interactions: [
-      {
-        type: 'slider',
-        cfg: {
-          start: 0.0,
-          end: 0.1,
-        },
-      },
-    ],
   }
 
   const barConfig = {

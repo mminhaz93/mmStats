@@ -21,10 +21,7 @@ const renderTabBar = (props, DefaultTabBar) => (
   </Sticky>
 )
 
-const CountriesGraphs = ({ data, searchedCountry, defaultTab }) => {
-  // const copyData = _.clone(data)
-  const countrySearchedCopy = searchedCountry.toLowerCase()
-
+const CountriesGraphs = ({ data, searchedCountry }) => {
   const transformCountryHistoryData = _.map(data, item => {
     const newItem = _.clone(item)
     newItem.country = newItem.country.toLowerCase()
@@ -33,11 +30,11 @@ const CountriesGraphs = ({ data, searchedCountry, defaultTab }) => {
 
   const filteredData = () => {
     let dataFiltered = []
-    if (countrySearchedCopy === '') {
+    if (searchedCountry === '' || searchedCountry == null) {
       dataFiltered = transformCountryHistoryData
     } else {
       dataFiltered = _.filter(transformCountryHistoryData, {
-        country: countrySearchedCopy,
+        country: searchedCountry.toLowerCase(),
       })
     }
     return dataFiltered
@@ -123,11 +120,7 @@ const CountriesGraphs = ({ data, searchedCountry, defaultTab }) => {
   return (
     <>
       <StickyContainer>
-        <Tabs
-          defaultActiveKey='1'
-          activeKey={defaultTab}
-          renderTabBar={renderTabBar}
-        >
+        <Tabs defaultActiveKey='1' renderTabBar={renderTabBar}>
           <TabPane tab='Line Chart' key='1'>
             <section>
               <LineChart {...lineChatConfig} />

@@ -8,7 +8,7 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Table, Button, Tooltip, Result } from 'antd'
+import { Input, Table, Button, Tooltip, Result, notification } from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
 import './style.scss'
@@ -30,7 +30,6 @@ import CountriesGraphs from './CountriesGraphs'
 class CountriesDetails extends Component {
   state = {
     searchedCountry: '',
-    defaultTab: '1',
     searchedColumn: '',
     countrySelectedForHistory: '',
     visible: false,
@@ -40,6 +39,14 @@ class CountriesDetails extends Component {
     // eslint-disable-next-line no-shadow
     const { fetchCountriesStat } = this.props
     fetchCountriesStat()
+  }
+
+  // Notification
+  openNotification = () => {
+    notification.open({
+      message: 'Notification Title',
+      description: 'Switch to Bar Chart for a better view',
+    })
   }
 
   // Drawer
@@ -135,13 +142,13 @@ class CountriesDetails extends Component {
     this.setState({
       searchedCountry: selectedKeys[0],
       searchedColumn: dataIndex,
-      defaultTab: '2',
     })
+    this.openNotification()
   }
 
   handleReset = clearFilters => {
     clearFilters()
-    this.setState({ searchedCountry: '', defaultTab: '1' })
+    this.setState({ searchedCountry: '' })
   }
 
   render() {
@@ -188,18 +195,13 @@ class CountriesDetails extends Component {
         render: getHistoryOfCountry,
       },
     ]
-    const {
-      countrySelectedForHistory,
-      searchedCountry,
-      defaultTab,
-    } = this.state
+    const { countrySelectedForHistory, searchedCountry } = this.state
     return (
       <>
         {!countriesError && !loadingCountries && (
           <CountriesGraphs
             data={countriesGraphData}
             searchedCountry={searchedCountry}
-            defaultTab={defaultTab}
           />
         )}
 
