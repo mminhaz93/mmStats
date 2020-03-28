@@ -67,8 +67,8 @@ const Graphs = ({ data }) => {
       {
         type: 'slider',
         cfg: {
-          start: 0.0,
-          end: 0.8,
+          start: 0.4,
+          end: 1.0,
         },
       },
     ],
@@ -92,8 +92,8 @@ const Graphs = ({ data }) => {
       {
         type: 'slider',
         cfg: {
-          start: 0.0,
-          end: 0.8,
+          start: 0.4,
+          end: 1.0,
         },
       },
     ],
