@@ -1,0 +1,48 @@
+@import './src/styles/_vars.scss';
+
+.table-operations {
+  margin-bottom: 16px;
+}
+
+.table-operations > button {
+  margin-right: 8px;
+}
+
+.covid-country-history {
+  width: 32px;
+  & span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.countires-graph {
+  background-color: $primary-color;
+}
+
+.ant-card-body {
+  padding: 2px;
+}
+
+// .covid-world-details_title {
+//   @include breakpoint($tablet) {
+//     font-size: 12px;
+//   }
+// }
+
+@media (max-width: 611px) {
+  .covid-world-details_title {
+    font-size: 15px !important;
+  }
+  .countires-graph {
+    & .ant-collapse-content-box {
+      padding: 0px;
+    }
+
+    canvas {
+      height: 300px !important;
+    }
+  }
+}

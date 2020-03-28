@@ -8,10 +8,18 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Table, Button, Tooltip, Result, notification } from 'antd'
+import {
+  Collapse,
+  Input,
+  Table,
+  Button,
+  Tooltip,
+  Result,
+  notification,
+} from 'antd'
 import Highlighter from 'react-highlight-words'
 import { connect } from 'react-redux'
-import './style.scss'
+import '../style.scss'
 import { SearchOutlined, EllipsisOutlined } from '@ant-design/icons'
 import {
   fetchCountriesStat,
@@ -196,14 +204,20 @@ class CountriesDetails extends Component {
       },
     ]
     const { countrySelectedForHistory, searchedCountry } = this.state
+    const { Panel } = Collapse
+
     return (
       <>
-        {!countriesError && !loadingCountries && (
-          <CountriesGraphs
-            data={countriesGraphData}
-            searchedCountry={searchedCountry}
-          />
-        )}
+        <Collapse className='countires-graph' defaultActiveKey={['1']}>
+          <Panel header='Show/hide Graphs' key='1'>
+            {!countriesError && !loadingCountries && (
+              <CountriesGraphs
+                data={countriesGraphData}
+                searchedCountry={searchedCountry}
+              />
+            )}
+          </Panel>
+        </Collapse>
 
         <div className='covid-world-table'>
           {!countriesError && (
@@ -211,6 +225,7 @@ class CountriesDetails extends Component {
               dataSource={transformCountiresData(countries)}
               columns={columns}
               loading={loadingCountries}
+              size='small'
             />
           )}
           {countriesError && (

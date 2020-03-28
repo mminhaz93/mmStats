@@ -31,14 +31,14 @@ class WorldDetails extends Component {
     )} (GMT)`
 
     return (
-      <div>
-        <Typography.Title className='text-primary-color'>
+      <div className='covid-world-details'>
+        <Typography.Title className='covid-world-details covid-world-details_title text-primary-color'>
           Coronavirus (COVID-19)
         </Typography.Title>
         <Alert message={worldDateMessage} type='info' showIcon />
 
         <Row>
-          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+          <Col xs={12} sm={12} md={6} lg={8} xl={6}>
             <Card>
               <Statistic
                 title='New Cases'
@@ -47,12 +47,12 @@ class WorldDetails extends Component {
               />
             </Card>
           </Col>
-          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+          <Col xs={12} sm={12} md={6} lg={8} xl={6}>
             <Card>
               <Statistic title='Total Cases' value={total_cases} />
             </Card>
           </Col>
-          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+          <Col xs={12} sm={12} md={6} lg={8} xl={6}>
             <Card>
               <Statistic
                 title='Total Recovered'
@@ -63,7 +63,7 @@ class WorldDetails extends Component {
             </Card>
           </Col>
 
-          <Col xs={24} sm={12} md={6} lg={8} xl={6}>
+          <Col xs={12} sm={12} md={6} lg={8} xl={6}>
             <Card>
               <Statistic
                 title='Total Death'

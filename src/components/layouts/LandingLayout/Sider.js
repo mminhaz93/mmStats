@@ -8,7 +8,7 @@ import { MdHealing } from 'react-icons/md'
 
 class Sider extends Component {
   state = {
-    collapsed: false,
+    collapsed: true,
   }
 
   onCollapse = collapsed => {
@@ -29,6 +29,8 @@ class Sider extends Component {
     return (
       <Layout.Sider
         collapsible
+        collapsedWidth='0'
+        breakpoint='lg'
         collapsed={collapsed}
         onCollapse={this.onCollapse}
       >

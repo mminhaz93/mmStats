@@ -145,7 +145,6 @@ const CountriesGraphs = ({ data, searchedCountry }) => {
 CountriesGraphs.propTypes = {
   data: PropTypes.array.isRequired,
   searchedCountry: PropTypes.string.isRequired,
-  defaultTab: PropTypes.string.isRequired,
 }
 
 export default CountriesGraphs
