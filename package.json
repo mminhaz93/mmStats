@@ -46,7 +46,7 @@
     "@antv/g2plot": "^1.0.2",
     "@opd/g2plot-react": "^1.1.0",
     "antd": "^3.20.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bourbon": "^6.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",
